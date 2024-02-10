@@ -16,6 +16,13 @@ fields such as machine learning, signal processing, and data mining,
 where the ability to extract meaningful information from large and
 complex datasets is key.
 
+.. module:: FeatureDice
+For quick reference these are all provided functions
+.. autosummary::
+    :nosignatures:
+
+    fusionData.fusionData
+
 Linear methods
 --------------
 
