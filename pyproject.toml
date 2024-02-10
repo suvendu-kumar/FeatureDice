@@ -1,0 +1,32 @@
+[build-system]
+requires = [
+	"setuptools>=54",
+	"wheel"
+]
+build-backend = "setuptools.build_meta"
+[project]
+name = "FeatureDice"
+version = "1.0.0"
+readme = "Readme.rst"
+description = "FeatureDice: Transforming cheminformatics/bioinformatics with advanced data fusion analysis."
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+	"seaborn",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "scikit-learn",
+	"tensorly",
+    "torch",
+    "tqdm",
+]
+optional-dependencies = { docs = [
+    "sphinx",
+    "sphinx-gallery",
+    "sphinx-rtd-theme"
+] }

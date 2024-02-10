@@ -1,0 +1,2 @@
+include FeatureDice/*.py
+recursive-include docs *
