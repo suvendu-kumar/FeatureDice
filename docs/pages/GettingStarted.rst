@@ -13,12 +13,12 @@ Import
 Reading Data
 ------------
 
-Define data path dictionary with name of dataset and csv file path. The
-csv file should contain ID and prediction_labels column along with
-features columns. If these columns named properly (ID and
-prediction_labels) you can provide\ ``id_column`` and
-``prediction_label_column`` argument during initialization of
-``fusionData``.
+Define data path dictionary with the name of the dataset and csv file 
+path. The csv file should contain ID and prediction_labels columns along 
+with features columns. If these columns are not named properly (ID and
+prediction_labels) you can provide by ``id_column`` and
+``prediction_label_column`` argument during initialization of 
+``fusionData`` object.
 
 .. code:: python
 
@@ -37,7 +37,7 @@ loading data from csv files and creating ``fusionData`` object.
    fusiondata = fusionData(data_paths = data_paths)
 
 After loading data, you can use ``fusionData`` object to access your by
-``dataframes`` dictionary in fusion data object. For example to get
+``dataframes`` dictionary in the fusion data object. For example to get
 tabular1 dataframe by the following code. This is important to look at
 the datasets before doing any analysis.
 
@@ -51,8 +51,8 @@ Data Cleaning
 Common samples
 ~~~~~~~~~~~~~~
 
-Keep only samples (rows) that are common across dataset. This is
-important if there is difference in set of samples across datasets.
+Keep only samples (rows) that are common across the dataset. This is
+important if there is difference in the set of samples across datasets.
 
 .. code:: python
 
@@ -61,11 +61,11 @@ important if there is difference in set of samples across datasets.
 Empty Features removal
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Features in data should be removed if there is higher percentage of
-missing values. Remove columns with more than a certain percentage of
+Features in data should be removed if there is a higher percentage of
+missing values. Removing columns with more than a certain percentage of
 missing values from dataframes can solve this. The percentage threshold
 of missing values to drop a column. ``threshold`` should be between 0
-and 100. ``ShowMissingValues`` is function which prints the count of
+and 100. ``ShowMissingValues`` is a function that prints the count of
 missing values in each dataset.
 
 .. code:: python
@@ -78,7 +78,7 @@ missing values in each dataset.
 Imputation/Remove features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Imputation of data if the data have low percentage of missing values.
+Imputation of data if the data have a low percentage of missing values.
 ``ImputeData`` is a function with takes a single argument which is
 method to be used for imputation. The ``method`` can be “knn”, “mean”,
 “mode”, “median”, and “interpolate”.
@@ -98,8 +98,8 @@ Normalization/Standardization/Transformation
 
 Data should be normalized before we proceed to fusion. There are three
 functions which can be used for data normalization ``scale_data``,
-``normalize_data`` and ``transform_data``. These functions takes single
-argument that is type of scaling/normalization/transformation.
+``normalize_data`` and ``transform_data``. These functions take a single
+argument which is the type of scaling/normalization/transformation.
 
 .. code:: python
 
@@ -128,9 +128,9 @@ transformation_type can be one of these ‘cubicroot’, ‘log10’, ‘log’,
 Data Fusion
 -----------
 
-Data fusion will take all the data that is normalized in previous step
-and make a single fused data. This will result in a single dataframe 
-``fusedData`` in the ``fusionData`` object.
+Data fusion will take all the data that is normalized in the previous 
+step and make a single fused data. This will result in a single 
+dataframe ``fusedData`` in the ``fusionData`` object.
 
 ::
 
@@ -151,11 +151,11 @@ Simple evaluation
 
 Data fused by different methods can be evaluated using different machine
 learning models using ``evaluate_fusion_models`` function. This function
-takes normalized data, split the data into test and train dataset and
-after that makes different ML model from fusion of training data and
-then evaluate the models by fusion of testing data. It also takes
-argument ``methods`` a list of fusion methods to evaluate. Optional
-arguments is ``n_components`` the number of components use for the
+takes normalized data, splits the data into test and train datasets, and
+after that makes different ML models from the fusion of training data 
+and then evaluates the models by fusion of testing data. It also takes
+argument ``methods``, a list of fusion methods to evaluate. The optional
+argument is ``n_components`` the number of components used for the
 fusion which is 10 by default.
 
 .. code:: python
@@ -180,14 +180,14 @@ Plotting the ``Accuracy_metrics`` can done by the following function.
    # give top_model dataframe & output directory name for saving plots
    plot_model_metrics(top_models, save_dir = "output_plots")
 
-Cross validation
+Cross-validation
 ~~~~~~~~~~~~~~~~
 
 The function ``evaluate_fusion_model_nfold`` can do n fold cross
 validation for evaluation of fusion methods, it takes Optional 
-arguments ``methods`` list argument to evaluate the fusion model and
-``n_components`` the number of components use for the fusion and the
-number of folds to use for cross-validation.
+arguments ``methods`` list to evaluate the fusion model, ``n_components``
+the number of components for the fusion and the number of folds for 
+cross-validation.
 
 .. code:: python
 
