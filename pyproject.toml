@@ -28,5 +28,13 @@ dependencies = [
 optional-dependencies = { docs = [
     "sphinx",
     "sphinx-gallery",
-    "sphinx-rtd-theme"
+    "sphinx-rtd-theme",	
+    "seaborn",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "scikit-learn",
+	"tensorly",
+    "torch",
+    "tqdm"
 ] }
