@@ -7,7 +7,7 @@ dependencies using the following command:
 
 .. code:: bash
 
-   pip install -i https://test.pypi.org/simple/ FeatureDice==1.0.0 scikit-learn torch tensorly
+   pip install -i https://test.pypi.org/simple/ FeatureDice==1.0.1 scikit-learn torch tensorly
 
 This command installs Featuredice along with the required
 dependencies **scikit-learn**, **torch**, and **tensorly**.
