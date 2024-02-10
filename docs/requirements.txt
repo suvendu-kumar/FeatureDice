@@ -1,2 +1,10 @@
 sphinx==7.2.6
 sphinx-rtd-theme==2.0.0
+seaborn
+matplotlib
+numpy
+pandas
+scikit-learn
+tensorly
+torch
+tqdm
