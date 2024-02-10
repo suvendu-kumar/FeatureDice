@@ -20,15 +20,11 @@ FeatureDice: Transforming cheminformatics/bioinformatics with advanced data fusi
     pages/methods/FusionMethods
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Modules:
+   :maxdepth: 1
+   :caption: Details of modules:
 
    modules
 
-.. toctree::
-.. autoclass:: FeatureDice.fusionData
-
-    .. automethod:: fusionData.plot_info
 
 Indices and tables
 ==================
