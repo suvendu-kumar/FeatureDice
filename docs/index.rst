@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to FeatureDice's documentation!
+FeatureDice
 =======================================
 
-This package can be used for Feature fusion using different methods.
+FeatureDice: Transforming cheminformatics/bioinformatics with advanced data fusion analysis.
 
 .. toctree::
     :maxdepth: 2
@@ -24,6 +24,11 @@ This package can be used for Feature fusion using different methods.
    :caption: Modules:
 
    modules
+
+.. toctree::
+.. autoclass:: FeatureDice.fusionData
+
+    .. automethod:: fusionData.plot_info
 
 Indices and tables
 ==================
