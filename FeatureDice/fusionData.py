@@ -144,7 +144,7 @@ class fusionData:
     
     def ShowMissingValues(self):
         """
-        Prints missing values fusion data inside the fusionData object.
+        Prints missing values inside dataframes in fusionData object.
         """
         dataframes = self.dataframes
         # Iterate through the dictionary and print missing DataFrame 
@@ -154,14 +154,14 @@ class fusionData:
 
     def show_info(self):
         """
-        Summarize fusion data inside the fusionData object.
+        Summarize dataframes inside the fusionData object.
         """
         show_dataframe_info(self.dataframes)
     
     def plot_info(self, about, save_dir=None):
         """
 
-        Generate plots based on the specified topic.
+        Generate plots for visualizing missing values and to check for normality of data.
 
         This method supports two types of plots:
            - 'missing_values': will generate a plot showing the missing values in the dataframes.
@@ -182,7 +182,7 @@ class fusionData:
 
     def keep_common_samples(self):
         """
-        Keep only the common samples or rows using the index column in dataframes.
+        Keep only the common samples or rows using the id in dataframes.
 
         """
         # Create an empty set to store the common indices
@@ -322,9 +322,9 @@ class fusionData:
         """
 
         This method supports four types of normalization methods:
-            - 'constant sum' normalization. The default sum is 1, which can  specified using the 'sum' keyword argument in kwargs. It is a method used to normalize data such that the sum of values for each observation remains constant. It ensures that the relative contributions of individual features to the total sum are compared rather than the absolute values. This normalization technique is beneficial for comparing samples with different total magnitudes but similar distributions. Mathematically, each observation is normalized by dividing it by the sum of its values, then multiplying by a constant factor to achieve the desired sum.
+            - 'constant sum' normalization. The default sum is 1, which can  specified using the 'sum' keyword argument in kwargs. It is a method used to normalize data such that the sum of values for each observation remains constant. It ensures that the relative contributions of individual features to the total sum are compared rather than the absolute values. This normalization technique is beneficial for comparing samples with different total magnitudes but similar distributions. Mathematically, each observation is normalized by dividing it by the sum of its values, and then multiplying by a constant factor to achieve the desired sum.
             - 'L1' normalization (Lasso Norm or Manhattan Norm): Also known as Lasso Norm or Manhattan Norm. Each observation vector is rescaled by dividing each element by the L1-norm of the vector.. L1-norm of a vector is the sum of the absolute values of its components. Mathematically, for a vector x, L1 normalization is given by: L1-Norm = ∑|x_i|. After L1 normalization, the sum of the absolute values of the elements in each vector becomes 1. Widely used in machine learning tasks such as Lasso regression to encourage sparsity in the solution.
-            - 'L2' normalization (Ridge Norm or Euclidean Norm): Also known as Ridge Norm or Euclidean Norm.Each observation vector is rescaled by dividing each element by the L2-norm of the vector. L2-norm of a vector is the square root of the sum of the squares of its components. Mathematically, for a vector x, L2 normalization is given by: L2-Norm = √∑x_i^2. After L2 normalization, the Euclidean distance (or the magnitude) of each vector becomes 1. Widely used in various machine learning algorithms such as logistic regression, support vector machines, and neural networks.
+            - 'L2' normalization (Ridge Norm or Euclidean Norm): Also known as Ridge Norm or Euclidean Norm. Each observation vector is rescaled by dividing each element by the L2-norm of the vector. L2-norm of a vector is the square root of the sum of the squares of its components. Mathematically, for a vector x, L2 normalization is given by: L2-Norm = √∑x_i^2. After L2 normalization, the Euclidean distance (or the magnitude) of each vector becomes 1. Widely used in various machine learning algorithms such as logistic regression, support vector machines, and neural networks.
             - 'max' normalization (Maximum Normalization): Scales each feature in the dataset by dividing it by the maximum absolute value of that feature across all observations. Ensures that each feature's values are within the range [-1, 1] or [0, 1] depending on whether negative values are present or not. Useful when the ranges of features in the dataset are significantly different, preventing certain features from dominating the learning process due to their larger scales. Commonly used in neural networks and deep learning models as part of the data preprocessing step.
 
         Normalize dataframes using different types of normalization.
@@ -357,8 +357,7 @@ class fusionData:
             elif normalization_type == 'max':
                 normalized_df = pd.DataFrame(normalize(df, norm='max'), index=df.index )
             else:
-                raise ValueError(f"""Unsupported normalization type: {normalization_type} 
-                                    possible values are 'constant_sum', 'L1' ,'L2' and 'max'   """)
+                raise ValueError(f"Unsupported normalization type: {normalization_type} \n possible values are 'constant_sum', 'L1' ,'L2' and 'max'   ")
             # Store the normalized dataframe in the normalized_df_dict
             dataframes[dataset_name] = normalized_df
         self.dataframes = dataframes
@@ -419,8 +418,7 @@ class fusionData:
                 # Transform the dataframe and convert the result to a dataframe
                 transformed_df = pd.DataFrame(scaler.fit_transform(df), index=df.index, columns=df.columns)
             else:
-                raise ValueError(f"""Unsupported transformation type: {transformation_type} possible values are 
-                                    'cubicroot', 'log10', 'log', 'log2', 'sqrt', 'powertransformer', or 'quantiletransformer'""")
+                raise ValueError(f"Unsupported transformation type: {transformation_type} possible values are \n 'cubicroot', 'log10', 'log', 'log2', 'sqrt', 'powertransformer', or 'quantiletransformer'")
             # Return the transformed dataframe
             
             dataframes[dataset_name] = transformed_df
@@ -761,8 +759,7 @@ class fusionData:
             invalid_methods_chemdices_text = ",".join(invalid_methods_chemdices)
 
             if len(invalid_methods_chemdices):
-                ValueError(f"""These methods are invalid:{invalid_methods_chemdices_text}\n
-                            Valid methods are : {methods_chemdices_text}""")
+                ValueError(f"These methods are invalid:{invalid_methods_chemdices_text}\n Valid methods are : {methods_chemdices_text}")
 
             for method_chemdice in valid_methods_chemdices:
                 # Fuse all data in dataframes
@@ -1080,12 +1077,6 @@ class fusionData:
 
 
 
-
-
-
-
-
-#from sklearn.preprocessing import RobustScaler, QuantileTransformer , PowerTransformer, QuantileTransformer, StandardScaler, MinMaxScaler, normalize
 
 
 
