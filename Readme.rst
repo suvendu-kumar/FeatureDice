@@ -1,80 +1,118 @@
-Introduction
-============
+Chemical Dice
+=============
 
-FeatureDice presents an innovative paradigm shift in cheminformatics and
-bioinformatics, leveraging advanced feature fusion methodologies to
+ChemicalDice presents an innovative paradigm shift in cheminformatics
+and bioinformatics, leveraging advanced feature fusion methodologies to
 transcend traditional data silos. By ingeniously amalgamating disparate
-data modalities—ranging from chemical descriptors and molecular
-structures to omics data, images, and phenotype information—FeatureDice
-pioneers a transformative approach. Through a rich arsenal of techniques
-including PCA, ICA, IPCA, CCA, t-SNE, KPCA, RKS, SEM, Autoencoders,
-Tensor Decomposition, and PLSDA, FeatureDice unlocks novel insights by
-unraveling the intricate interplay between chemical and biological
-entities within complex datasets. Its intuitive interface and
-comprehensive toolkit empower researchers to seamlessly navigate through
-the complexities of integrative analyses, heralding a new era of
-interdisciplinary research and discovery.
+data modalities from chemical descriptors. Through a rich arsenal of
+techniques including Autoencoder Reconstruction, PCA, ICA, IPCA, CCA,
+t-SNE, KPCA, RKS, SEM, Autoencoders, Tensor Decomposition, and PLSDA.
+ChemicalDice unlocks novel insights by unraveling the intricate
+interplay between chemical and biological entities within complex
+datasets. Its intuitive interface and comprehensive toolkit empower
+researchers to seamlessly navigate through the complexities of
+integrative analyses.
 
+Environment set up
+==================
+
+To setup an environment to run ChemicalDice you can install miniconda
+using command.
+
+.. code:: bash
+
+   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+   bash Miniconda3-latest-Linux-x86_64.sh
+
+Follow the prompts after above commands to install conda. Make a
+separate environment named chemdice using the conda create
+
+.. code:: bash
+
+   conda create -n chemicaldice python=3.9
+   conda activate chemicaldice
 
 Installation
 ============
 
-To use the **FeatureDice** package, you need to install it along
-with its dependencies. You can install FeatureDice and its
-dependencies using the following command:
+To use the **ChemicalDice** package, you need to install it along with
+its dependencies. You can install ChemicalDice and its dependencies
+using the following command:
 
 .. code:: bash
 
-   pip install -i https://test.pypi.org/simple/ FeatureDice==1.0.1 scikit-learn torch tensorly
+   pip install -i https://test.pypi.org/simple/ ChemicalDice==0.3.9
+   pip install torch==2.2.1 torchvision==0.17.1 torchaudio==2.2.1 --index-url https://download.pytorch.org/whl/rocm5.7
+   pip install multitasking==0.0.11 pandas==2.0.3 scikit-learn==1.2.2 seaborn==0.13.1 tqdm==4.66.4 xgboost==2.0.3
+   pip install rdkit==2023.9.6 signaturizer==1.1.14 descriptastorus==2.6.1 mordred==1.2.0 tensorly==0.8.1 transformers==4.40.1
+   pip install --upgrade tensorflow==2.15
+   conda install conda-forge::openbabel
+   conda install conda-forge::cpulimit
 
-This command installs Featuredice along with the required
-dependencies **scikit-learn**, **torch**, and **tensorly**.
+This command installs Chemicaldice along with the required dependencies.
 Make sure to have the appropriate versions of these packages compatible
-with Featuredice version 1.0.0.
+with ChemicalDice.
 
-Import
-------
+Calculation of descriptors
+--------------------------
 
 .. code:: python
 
-   from FeatureDice.fusionData import fusionData
-   from FeatureDice.plot_data import plot_model_metrics
-   from FeatureDice.plot_data import plot_model_boxplot
+   # create a directory for storing descriptors filefrom ChemicalDice 
+   import smiles_preprocess, bioactivity, chemberta, Grover, ImageMol, chemical, quantum
+   import os
+   os.mkdir("Chemicaldice_data")
+   # download prerequisites for quantum, grover and ImageMol
+   quantum.get_mopac_prerequisites()
+   # input file containing SMILES and labels
+   input_file = "your_file_name.csv"
+   # preprocessing of smiles to different formats
+   smiles_preprocess.add_canonical_smiles(input_file)
+   smiles_preprocess.create_mol2_files(input_file)
+   smiles_preprocess.create_sdf_files(input_file)
+   # calculation of all descriptors
+   quantum.descriptor_calculator(input_file, output_file="Chemicaldice_data/mopac.csv")
+   Grover.get_embeddings(input_file,  output_file_name="Chemicaldice_data/Grover.csv")
+   ImageMol.image_to_embeddings(input_file, output_file_name="Chemicaldice_data/ImageMol.csv")
+   chemberta.smiles_to_embeddings(input_file, output_file = "Chemicaldice_data/Chemberta.csv")
+   bioactivity.calculate_descriptors(input_file, output_file = "Chemicaldice_data/Signaturizer.csv")
+   chemical.descriptor_calculator(input_file, output_file="Chemicaldice_data/mordred.csv")
 
 Reading Data
 ------------
 
 Define data path dictionary with name of dataset and csv file path. The
-csv file should contain ID and prediction_labels column along with
-features columns. If these columns named properly (ID and
-prediction_labels) you can provide\ ``id_column`` and
-``prediction_label_column`` argument during initialization of
-``fusionData``.
+csv file should contain ID column along with features columns. Label
+file should contain id and labels. If these columns not named id and
+labels you can provide\ ``id_column`` and ``label_column`` argument
+during initialization of ``fusionData``.
 
 .. code:: python
 
+   from ChemicalDice.fusionData import fusionData
    data_paths = {
-       "tabular1":"data/Chemberta_embeddings.csv",
-       "tabular2":"data/graph_embeddings.csv",
-       "tabular3":"data/mopac_descriptors.csv",
-       "tabular4":"data/mordred_descriptors.csv",
-       "tabular5":"data/signaturizer_descriptors.csv"
+      "Chemberta":"Chemicaldice_data/Chemberta.csv",
+      "Grover":"Chemicaldice_data/Grover.csv",
+      "mopac":"Chemicaldice_data/mopac.csv",
+      "mordred":"Chemicaldice_data/mordred.csv",
+      "Signaturizer":"Chemicaldice_data/Signaturizer.csv",
+      "ImageMol": "Chemicaldice_data/ImageMol.csv"
    }
 
 loading data from csv files and creating ``fusionData`` object.
 
 .. code:: python
 
-   fusiondata = fusionData(data_paths = data_paths)
+   fusiondata = fusionData(data_paths = data_paths, label_file_path="freesolv.csv", label_column="labels", id_column="id")
 
-After loading data, you can use ``fusionData`` object to access your by
-``dataframes`` dictionary in fusion data object. For example to get
-tabular1 dataframe by the following code. This is important to look at
-the datasets before doing any analysis.
+After loading data, you can use ``fusionData`` object to access your
+data by ``dataframes`` dictionary in fusion data object. This is
+important to look at the datasets before doing any analysis. For example
+to get all dataframes use the following code.
 
 .. code:: python
 
-   fusiondata.dataframes['tabular1']
+   fusiondata.dataframes
 
 Data Cleaning
 -------------
@@ -101,7 +139,6 @@ missing values in each dataset.
 
 .. code:: python
 
-
    fusiondata.ShowMissingValues()
    fusiondata.remove_empty_features(threshold=20)
    fusiondata.ShowMissingValues()
@@ -110,14 +147,13 @@ Imputation/Remove features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Imputation of data if the data have low percentage of missing values.
-``ImputeData`` is a function with takes a single argument which is
+``ImputeData`` is a function which takes a single argument which is
 method to be used for imputation. The ``method`` can be “knn”, “mean”,
 “mode”, “median”, and “interpolate”.
 
 .. code:: python
 
-   # Imputing values with missing values
-   fusiondata.ShowMissingValues()
+   # Imputing values with missing valuesfusiondata.ShowMissingValues()
    fusiondata.ImputeData(method="knn")
    fusiondata.ShowMissingValues()
 
@@ -137,7 +173,7 @@ argument that is type of scaling/normalization/transformation.
    # Standardize data
    fusiondata.scale_data(scaling_type = 'standardize')
 
-scaling type can be one of these ‘minmax’ , ‘minmax’ ‘robust’ or
+``scaling_type`` can be one of these ‘minmax’ , ‘minmax’ ‘robust’ or
 ‘pareto’
 
 .. code:: python
@@ -145,101 +181,99 @@ scaling type can be one of these ‘minmax’ , ‘minmax’ ‘robust’ or
    # Normalize data
    fusiondata.normalize_data(normalization_type ='constant_sum')
 
-normalization types can be one of these ‘constant_sum’, ‘L1’ ,‘L2’ or
-‘max’
+``normalization_types`` can be one of these ‘constant_sum’, ‘L1’ ,‘L2’
+or ‘max’
 
 .. code:: python
 
    # Transform data
    fusiondata.transform_df(transformation_type ='log')
 
-transformation_type can be one of these ‘cubicroot’, ‘log10’, ‘log’,
+``transformation_type`` can be one of these ‘cubicroot’, ‘log10’, ‘log’,
 ‘log2’, ‘sqrt’, ‘powertransformer’, or ‘quantiletransformer’.
 
-Data Fusion
------------
+**Data Fusion**
+---------------
 
 Data fusion will take all the data that is normalized in previous step
-and make a single fused data. This will result in a single dataframe 
-``fusedData`` in the ``fusionData`` object.
+and make a single fused data. The ``fuseFeatures`` method can be used to
+fuse the data and save it in a csv file. The fusion methods to use given
+by methods argument. Methods available for fusing data are ‘AER’, ‘pca’,
+‘ica’, ‘ipca’, ‘cca’, ‘tsne’, ‘kpca’, ‘rks’, ‘SEM’, ‘autoencoder’, and
+‘tensordecompose’. The components to keep from different data can be
+provided by ``n_components``\ aggumrent. Reduced dimensions to use for
+Autoencoder Reconstruction can be provided by ``AER_dim`` argument.
+Argument ``save_dir`` can be used to specify directory for saving the
+fused data.
+
+.. code:: python
+
+   # fusing features in different data
+   fusiondata.fuseFeatures(n_components=10,
+                     methods= ['pca','tensordecompose','plsda','AER'],
+                     AER_dim= [4096,8192],
+                     save_dir = "ChemicalDice_fusedData")
+
+**Evaluation of Fusion Methods**
+--------------------------------
+
+**Cross Validation**
+~~~~~~~~~~~~~~~~~~~~
+
+The method ``evaluate_fusion_model_nfold`` can perform n-fold cross
+validation for the evaluation of fusion methods. It takes
+the ``nfold`` argument for the number of folds to use for
+cross-validation, the ``task_type`` argument for classification or
+regression problems, and the ``fused_data_path`` directory that contains
+the fused data as CSV files generated in the feature fusion step.
+
+.. code:: python
+
+   # Evaluate all models using 10-fold cross-validation for regression tasks
+   fusiondata.evaluate_fusion_models_nfold(folds=10,
+                                           task_type="regression",
+                                           fused_data_path="ChemicalDice_fusedData")
+
+Metrics for all the models can be accessed using
+the ``get_accuracy_metrics`` method, which takes
+the ``result_dir`` argument for the directory containing CSV files from
+n-fold cross-validation. The outputs are
+dataframes ``mean_accuracy_metrics`` and ``accuracy_metrics``, along
+with boxplots for the top models for each fusion method saved
+in ``result_dir``.
 
 ::
 
-   # fusing features in different data
-   fusiondata.fuseFeatures(n_components = 10,  method="plsda")
-   fused_dataframe = fusiondata.fusedData
+   ## Accuracy metrics for all models
+   mean_accuracy_metrics, accuracy_metrics = fusiondata.get_accuracy_metrics(result_dir='10_fold_CV_results')
 
-Other methods available for fusing data are ‘pca’, ‘ica’, ‘ipca’, ‘cca’,
-‘tsne’, ‘kpca’, ‘rks’, ‘SEM’, ‘autoencoder’, and ‘tensordecompose’, The
-argument number of components can be provided to by ``n_components``
-parameter to ``fuseFeature`` function.
+**Scaffold Splitting**
+~~~~~~~~~~~~~~~~~~~~~~
 
-Evaluation of fusion methods
-----------------------------
-
-Simple evaluation
-~~~~~~~~~~~~~~~~~
-
-Data fused by different methods can be evaluated using different machine
-learning models using ``evaluate_fusion_models`` function. This function
-takes normalized data, split the data into test and train dataset and
-after that makes different ML model from fusion of training data and
-then evaluate the models by fusion of testing data. It also takes
-argument ``methods`` a list of fusion methods to evaluate. Optional
-arguments is ``n_components`` the number of components use for the
-fusion which is 10 by default.
+The method ``evaluate_fusion_models_scaffold_split`` can perform
+scaffold splitting for the evaluation of fusion methods. It takes the
+arguments ``split_type`` (“random” for random scaffold splitting,
+“balanced” for balanced scaffold splitting, and “simple” for just
+scaffold splitting), ``task_type`` for “classification” or “regression”
+problems, and the ``fused_data_path`` directory that contains the fused
+data as CSV files generated in the feature fusion step.
 
 .. code:: python
 
-   # evaluate all models
-   fusiondata.evaluate_fusion_models(n_components=10, methods= ['pca','cca'])
+   # Evaluate all models using random scaffold splitting for regression tasks
+   fusiondata.evaluate_fusion_models_scaffold_split(split_type="random",
+                                                    task_type="regression",
+                                                    fused_data_path="ChemicalDice_fusedData")
 
-Metrics of all the models can be accessed by ``Accuracy_metrics`` in
-``fusionData`` object.
-
-.. code:: python
-
-   ## Accuracy metrics all models
-   fusiondata.Accuracy_metrics
-   #top 10 models 
-   top_models = fuseiondata.Accuracy_metrics.iloc[0:10,:]
-
-Plotting the ``Accuracy_metrics`` can done by the following function.
+Metrics for all the models can be accessed using
+the ``get_accuracy_metrics`` method, which takes
+the ``result_dir`` argument for the directory containing CSV files from
+scaffold splitting. The outputs are
+dataframes ``test_metrics``, ``train_metrics``, and ``val_metrics``,
+along with bar plots for the top models for each fusion method saved
+in ``result_dir``.
 
 .. code:: python
 
-   # give top_model dataframe & output directory name for saving plots
-   plot_model_metrics(top_models, save_dir = "output_plots")
-
-Cross validation
-~~~~~~~~~~~~~~~~
-
-The function ``evaluate_fusion_model_nfold`` can do n fold cross
-validation for evaluation of fusion methods, it takes Optional 
-arguments ``methods`` list argument to evaluate the fusion model and
-``n_components`` the number of components use for the fusion and the
-number of folds to use for cross-validation.
-
-.. code:: python
-
-   # evaluate all models
-   fusiondata.evaluate_fusion_models_nfold(n_components=10,
-                                             methods= ['pca','cca'],
-                                             n_folds = 10)
-
-Metrics of all the models can be accessed by ``Accuracy_metrics`` in
-``fusionData`` object.
-
-.. code:: python
-
-   ## Accuracy metrics all models
-   fusiondata.Accuracy_metrics
-   #top 10 models 
-   top_models = fuseiondata.Accuracy_metrics.iloc[0:10,:]
-
-Plotting of the ``Accuracy_metrics`` can done by the following function.
-
-.. code:: python
-
-   # give top model dataframe & output directory name for saving box plots
-   plot_model_boxplot(top_models, save_dir ='outputs')
+   ## Accuracy metrics for all models
+   test_metrics, train_metrics, val_metrics = fusiondata.get_accuracy_metrics(result_dir='scaffold_split_results')

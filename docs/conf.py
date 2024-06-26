@@ -13,15 +13,15 @@ import sys
 sys.path.extend([os.path.abspath('..'),       # import metadata
                  os.path.abspath('../')])  # import signatory
 
-project = 'FeatureDice'
+project = 'ChemicalDice'
 copyright = '2024, Suvendu Kumar'
 author = 'Suvendu Kumar'
-release = '1.0.0'
+release = '0.0.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.autodoc','sphinx.ext.napoleon','sphinx.ext.autosummary','sphinx.ext.viewcode','sphinx.ext.todo', 'sphinx.ext.intersphinx']
+extensions = ['sphinx.ext.autodoc','sphinx.ext.napoleon','sphinx.ext.autosummary','sphinx.ext.viewcode','sphinx.ext.todo', 'sphinx.ext.intersphinx','sphinx_toolbox.latex']
 
 
 templates_path = ['_templates']

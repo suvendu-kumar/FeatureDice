@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FeatureDice.plot_data &mdash; FeatureDice 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            FeatureDice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/methods/ImputationMethods.html">Imputation Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/methods/NormalizationMethods.html">Normalization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/methods/FusionMethods.html">Fusion Methods</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">FeatureDice</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">FeatureDice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">FeatureDice.plot_data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for FeatureDice.plot_data</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="plot_missing_values">
+<a class="viewcode-back" href="../../FeatureDice.html#FeatureDice.plot_data.plot_missing_values">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_missing_values</span><span class="p">(</span><span class="n">df_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">dataset_names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Plot stacked barcharts of missing vs non-missing values in the columns of each dataframe in a list.</span>
+
+<span class="sd">    :param df_list: A list of Pandas DataFrames with missing values.</span>
+<span class="sd">    :type df_list: List[pd.DataFrame]</span>
+<span class="sd">    :param dataset_names: Names of the datasets corresponding to each dataframe in df_list.</span>
+<span class="sd">    :type dataset_names: List[str]</span>
+<span class="sd">    :param save_dir: Directory to save the plots. If None, the plots are shown. If provided, the plots are saved to this directory.</span>
+<span class="sd">    :type save_dir: str, optional</span>
+
+<span class="sd">    :output: Matplotlib figures with the barcharts.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">df</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df_list</span><span class="p">,</span> <span class="n">dataset_names</span><span class="p">):</span>
+        <span class="c1"># Get the number of missing and non-missing values in each column</span>
+        <span class="n">num_missing</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">num_non_missing</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">notnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="c1"># Create a figure and an axis</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+        <span class="c1"># Plot the non-missing values as the bottom bars</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">num_non_missing</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Non Missing&quot;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Plot the missing values as the top bars</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">num_missing</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="n">num_non_missing</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Missing&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+        <span class="c1"># Add some labels and a title</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of values&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Missing vs Non-Missing Values in &quot;</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+        <span class="c1"># Check if running in Jupyter notebook</span>
+        <span class="k">if</span> <span class="n">save_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_dir</span><span class="p">):</span> 
+                <span class="c1"># if the dir directory is not present then create it. </span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span> 
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">_missing_values_plot.png&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="barplot_normality_check">
+<a class="viewcode-back" href="../../FeatureDice.html#FeatureDice.plot_data.barplot_normality_check">[docs]</a>
+<span class="k">def</span> <span class="nf">barplot_normality_check</span><span class="p">(</span><span class="n">df_list</span><span class="p">,</span> <span class="n">dataset_names</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Creates a barplot of p-values for normality test in Python for each dataframe in a list.</span>
+
+<span class="sd">    :param df_list: The list of dataframes to be tested for normality.</span>
+<span class="sd">    :type df_list: list of pandas.DataFrame</span>
+<span class="sd">    :param dataset_names: The names of the datasets corresponding to each dataframe in df_list.</span>
+<span class="sd">    :type dataset_names: list of str</span>
+<span class="sd">    :param alpha: The significance level for the normality test. The default is 0.05.</span>
+<span class="sd">    :type alpha: float, optional</span>
+<span class="sd">    :param save_dir: The directory to save the plots. If None, the plots are shown. If provided, the plots are saved to this directory.</span>
+<span class="sd">    :type save_dir: str, optional</span>
+
+<span class="sd">    :output: Matplotlib figures with the barcharts.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># loop through each dataframe and dataset name in the list</span>
+    <span class="k">for</span> <span class="n">df</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df_list</span><span class="p">,</span> <span class="n">dataset_names</span><span class="p">):</span>
+        <span class="c1"># initialize an empty list to store the p-values</span>
+        <span class="n">pvalues</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># loop through each column of the dataframe</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="c1"># perform the D&#39;Agostino&#39;s K^2^ test on the column</span>
+            <span class="n">k2</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">normaltest</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+            <span class="c1"># append the p-value to the list</span>
+            <span class="n">pvalues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        
+        <span class="c1"># create a figure and an axis</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        
+        <span class="c1"># create a barplot of the p-values</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">pvalues</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+        <span class="c1"># add a horizontal line at the significance level</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+        <span class="c1"># add labels and a title</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Columns&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;P-values&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Barplot of P-values for Normality Test in &#39;</span> <span class="o">+</span> <span class="n">dataset_name</span><span class="p">)</span>
+        
+        <span class="c1"># check if a save directory is provided</span>
+        <span class="k">if</span> <span class="n">save_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># create the directory if it does not exist</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_dir</span><span class="p">):</span> 
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span> 
+            <span class="c1"># save the plot to the directory</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s1">_normality_plot.png&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># show the plot</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="plot_model_boxplot">
+<a class="viewcode-back" href="../../FeatureDice.html#FeatureDice.plot_data.plot_model_boxplot">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_model_boxplot</span><span class="p">(</span><span class="n">metrics_df</span><span class="p">,</span> <span class="n">save_dir</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots the performance metrics of different models on a boxplot chart.</span>
+
+<span class="sd">    :param metrics_df: The dataframe containing the performance metrics of different models.</span>
+<span class="sd">    :type metrics_df: pd.DataFrame</span>
+<span class="sd">    :param save_dir: The directory where the plot will be saved. If None, the plot will be displayed without being saved.</span>
+<span class="sd">    :type save_dir: str, optional</span>
+
+<span class="sd">    :output: Matplotlib figures with the boxplot charts.</span>
+
+<span class="sd">    .. note::  </span>
+<span class="sd">        The metrics are : AUC, Accuracy, Precision, Recall, f1 score, Balanced accuracy, MCC and Kappa for classification. R2 Score and MSE for regression.</span>
+<span class="sd">        </span>
+<span class="sd">        - **AUC**: The area under the receiver operating characteristic curve, which measures the trade-off between the true positive rate and the false positive rate.</span>
+<span class="sd">        - **Accuracy**: The proportion of correctly classified instances among the total number of instances.</span>
+<span class="sd">        - **Precision**: The proportion of correctly classified positive instances among the predicted positive instances.</span>
+<span class="sd">        - **Recall**: The proportion of correctly classified positive instances among the actual positive instances.</span>
+<span class="sd">        - **f1 score**: The harmonic mean of precision and recall, which balances both metrics.</span>
+<span class="sd">        - **Balanced accuracy**: The average of recall obtained on each class, which is useful for imbalanced datasets.</span>
+<span class="sd">        - **MCC**: The Matthews correlation coefficient, which measures the quality of a binary classification, taking into account true and false positives and negatives.</span>
+<span class="sd">        - **Kappa**: The Cohen&#39;s kappa coefficient, which measures the agreement between two raters, adjusting for the chance agreement.</span>
+<span class="sd">        - **R2 Score**: The statistical measure that indicates the proportion of variance in the dependent variable that&#39;s predictable from the independent variable(s). </span>
+<span class="sd">        - **MSE(Mean Squared Error)**: The average of the squared differences between the actual and predicted values, used as a loss function in regression problems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;AUC&#39;</span><span class="p">,</span> <span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;Precision&#39;</span><span class="p">,</span> <span class="s1">&#39;Recall&#39;</span><span class="p">,</span><span class="s1">&#39;f1 score&#39;</span><span class="p">,</span> <span class="s1">&#39;Balanced accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;MCC&#39;</span><span class="p">,</span> <span class="s1">&#39;Kappa&#39;</span><span class="p">]:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+        <span class="c1"># Creating the box plot</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Model&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">metrics_df</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Set3&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Adding jitter for the Fold information with stripplot</span>
+        <span class="c1"># Note: &#39;dodge=True&#39; allows the jitter to be properly aligned with each box</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Model&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">metrics_df</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Fold&#39;</span><span class="p">,</span> <span class="n">dodge</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Enhancing the plot</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Box Plot with </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1"> values for different methods at different folds&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Fold&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">rotation_mode</span><span class="o">=</span><span class="s1">&#39;anchor&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="c1"># Save the figure</span>
+        <span class="c1"># check if a save directory is provided</span>
+        <span class="k">if</span> <span class="n">save_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># create the directory if it does not exist</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_dir</span><span class="p">):</span> 
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span> 
+            <span class="c1"># save the plot to the directory</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s2">/metrics</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># show the plot</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">to_rgba</span>
+<span class="kn">from</span> <span class="nn">matplotlib.lines</span> <span class="kn">import</span> <span class="n">Line2D</span>
+
+<div class="viewcode-block" id="plot_model_metrics">
+<a class="viewcode-back" href="../../FeatureDice.html#FeatureDice.plot_data.plot_model_metrics">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_model_metrics</span><span class="p">(</span><span class="n">metrics_df</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plot the performance metrics of different models on a bar chart.</span>
+
+<span class="sd">    :param metrics_df: A pandas DataFrame with the model names, types, and metrics as columns.</span>
+<span class="sd">    :type metrics_df: pd.DataFrame</span>
+<span class="sd">    :param save_dir: The directory to save the plots. If None, the plots are shown instead.</span>
+<span class="sd">    :type save_dir: str or None</span>
+
+<span class="sd">    .. note::  </span>
+<span class="sd">        The metrics are : AUC, Accuracy, Precision, Recall, f1 score, Balanced accuracy, MCC and Kappa for classification. R2 Score and MSE for regression.</span>
+<span class="sd">        </span>
+<span class="sd">        - **AUC**: The area under the receiver operating characteristic curve, which measures the trade-off between the true positive rate and the false positive rate.</span>
+<span class="sd">        - **Accuracy**: The proportion of correctly classified instances among the total number of instances.</span>
+<span class="sd">        - **Precision**: The proportion of correctly classified positive instances among the predicted positive instances.</span>
+<span class="sd">        - **Recall**: The proportion of correctly classified positive instances among the actual positive instances.</span>
+<span class="sd">        - **f1 score**: The harmonic mean of precision and recall, which balances both metrics.</span>
+<span class="sd">        - **Balanced accuracy**: The average of recall obtained on each class, which is useful for imbalanced datasets.</span>
+<span class="sd">        - **MCC**: The Matthews correlation coefficient, which measures the quality of a binary classification, taking into account true and false positives and negatives.</span>
+<span class="sd">        - **Kappa**: The Cohen&#39;s kappa coefficient, which measures the agreement between two raters, adjusting for the chance agreement.</span>
+<span class="sd">        - **R2 Score**: The statistical measure that indicates the proportion of variance in the dependent variable that&#39;s predictable from the independent variable(s). </span>
+<span class="sd">        - **MSE(Mean Squared Error)**: The average of the squared differences between the actual and predicted values, used as a loss function in regression problems.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">metrics_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="n">matric_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;AUC&#39;</span><span class="p">,</span> <span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;Precision&#39;</span><span class="p">,</span> <span class="s1">&#39;Recall&#39;</span><span class="p">,</span><span class="s1">&#39;f1 score&#39;</span><span class="p">,</span> <span class="s1">&#39;Balanced accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;MCC&#39;</span><span class="p">,</span> <span class="s1">&#39;Kappa&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">matric_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;R2 Score&quot;</span> <span class="p">,</span> <span class="s2">&quot;MSE&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">matric_list</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="c1"># Get unique values from the &#39;Model type&#39; column</span>
+        <span class="n">unique_categories</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Model type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="c1"># Create a dictionary mapping each unique category to a unique color</span>
+        <span class="n">color_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">category</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_categories</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">category</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_categories</span><span class="p">)}</span>
+        <span class="c1"># Map the colors to the original &#39;Model type&#39; column and convert to RGBA format</span>
+        <span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Model type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">color_mapping</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">to_rgba</span><span class="p">)</span>
+        <span class="c1"># Create a bar plot</span>
+        <span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Model&#39;</span><span class="p">],</span> <span class="n">metrics_df</span><span class="p">[</span><span class="n">metric</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Color&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;Model type&#39;</span><span class="p">])</span>
+        <span class="c1"># Add labels and title</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Models&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1"> Values&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bar Plot with </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s1"> values for different methods&#39;</span><span class="p">)</span>
+        <span class="c1"># Rotate x-axis labels by 45 degrees</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">rotation_mode</span><span class="o">=</span><span class="s1">&#39;anchor&#39;</span><span class="p">)</span>
+        <span class="c1"># Add legend</span>
+        <span class="c1">#ax.legend()</span>
+        <span class="c1"># Adjust layout</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="c1"># Save the figure</span>
+        <span class="k">if</span> <span class="n">save_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># create the directory if it does not exist</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_dir</span><span class="p">):</span> 
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span> 
+            <span class="c1"># save the plot to the directory</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s2">/metrics</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># show the plot</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">legend_handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">category</span><span class="p">)</span> <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">color_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+
+    <span class="c1"># Create legend without a plot</span>
+    <span class="n">legend_fig</span><span class="p">,</span> <span class="n">legend_ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">legend_ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">legend_ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">legend_handles</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_categories</span><span class="p">))</span>
+
+    <span class="c1"># Save the legend as a separate image</span>
+    <span class="k">if</span> <span class="n">save_dir</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">legend_fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">legend_fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s2">/legend.png&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span></div>
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Suvendu Kumar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

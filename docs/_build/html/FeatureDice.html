@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FeatureDice package &mdash; FeatureDice 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="FeatureDice" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            FeatureDice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pages/Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/methods/ImputationMethods.html">Imputation Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/methods/NormalizationMethods.html">Normalization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/methods/FusionMethods.html">Fusion Methods</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">FeatureDice</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">FeatureDice package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-FeatureDice.fusionData">FeatureDice.fusionData module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.fusionData.fusionData"><code class="docutils literal notranslate"><span class="pre">fusionData</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-FeatureDice.preprocess_data">FeatureDice.preprocess_data module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.preprocess_data.clear_and_process_data"><code class="docutils literal notranslate"><span class="pre">clear_and_process_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.preprocess_data.normalize_to_constant_sum"><code class="docutils literal notranslate"><span class="pre">normalize_to_constant_sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.preprocess_data.show_dataframe_info"><code class="docutils literal notranslate"><span class="pre">show_dataframe_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.preprocess_data.check_missing_values"><code class="docutils literal notranslate"><span class="pre">check_missing_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.preprocess_data.remove_columns_by_missing_threshold"><code class="docutils literal notranslate"><span class="pre">remove_columns_by_missing_threshold()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-FeatureDice.saving_data">FeatureDice.saving_data module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.saving_data.save_train_test_data_n_fold"><code class="docutils literal notranslate"><span class="pre">save_train_test_data_n_fold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.saving_data.save_train_test_data"><code class="docutils literal notranslate"><span class="pre">save_train_test_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-FeatureDice.analyse_data">FeatureDice.analyse_data module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.analyse_data.ccafuse"><code class="docutils literal notranslate"><span class="pre">ccafuse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.analyse_data.apply_analysis_nonlinear1"><code class="docutils literal notranslate"><span class="pre">apply_analysis_nonlinear1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.analyse_data.apply_analysis_nonlinear2"><code class="docutils literal notranslate"><span class="pre">apply_analysis_nonlinear2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.analyse_data.DynamicAutoencoder"><code class="docutils literal notranslate"><span class="pre">DynamicAutoencoder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.analyse_data.apply_analysis_nonlinear3"><code class="docutils literal notranslate"><span class="pre">apply_analysis_nonlinear3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.analyse_data.apply_analysis_nonlinear4"><code class="docutils literal notranslate"><span class="pre">apply_analysis_nonlinear4()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.analyse_data.apply_analysis_linear1"><code class="docutils literal notranslate"><span class="pre">apply_analysis_linear1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.analyse_data.apply_analysis_linear2"><code class="docutils literal notranslate"><span class="pre">apply_analysis_linear2()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-FeatureDice.plot_data">FeatureDice.plot_data module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.plot_data.plot_missing_values"><code class="docutils literal notranslate"><span class="pre">plot_missing_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.plot_data.barplot_normality_check"><code class="docutils literal notranslate"><span class="pre">barplot_normality_check()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.plot_data.plot_model_boxplot"><code class="docutils literal notranslate"><span class="pre">plot_model_boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#FeatureDice.plot_data.plot_model_metrics"><code class="docutils literal notranslate"><span class="pre">plot_model_metrics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-FeatureDice">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FeatureDice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">FeatureDice</a></li>
+      <li class="breadcrumb-item active">FeatureDice package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/FeatureDice.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="featuredice-package">
+<h1>FeatureDice package<a class="headerlink" href="#featuredice-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-FeatureDice.fusionData">
+<span id="featuredice-fusiondata-module"></span><h2>FeatureDice.fusionData module<a class="headerlink" href="#module-FeatureDice.fusionData" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FeatureDice.fusionData.</span></span><span class="sig-name descname"><span class="pre">fusionData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_label_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prediction_label'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for handling data and performing fusion tasks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">data_paths</span></span></dt>
+<dd><p>List of file paths containing the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">id_column</span></span></dt>
+<dd><p>Name of the column representing unique identifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">dataframes</span></span></dt>
+<dd><p>Dictionary containing processed dataframes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">prediction_label</span></span></dt>
+<dd><p>Placeholder for prediction labels.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">fusedData</span></span></dt>
+<dd><p>Placeholder for fused data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">pls_model</span></span></dt>
+<dd><p>Placeholder for the PLS model.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">Accuracy_metrics</span></span></dt>
+<dd><p>Placeholder for accuracy metrics.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">train_dataframes</span></span></dt>
+<dd><p>Placeholder for training dataframes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">test_dataframes</span></span></dt>
+<dd><p>Placeholder for testing dataframes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">train_label</span></span></dt>
+<dd><p>Placeholder for training labels.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">test_label</span></span></dt>
+<dd><p>Placeholder for testing labels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.ShowMissingValues">
+<span class="sig-name descname"><span class="pre">ShowMissingValues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.ShowMissingValues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.ShowMissingValues" title="Link to this definition"></a></dt>
+<dd><p>Prints missing values fusion data inside the fusionData object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.show_info">
+<span class="sig-name descname"><span class="pre">show_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.show_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.show_info" title="Link to this definition"></a></dt>
+<dd><p>Summarize fusion data inside the fusionData object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.plot_info">
+<span class="sig-name descname"><span class="pre">plot_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">about</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.plot_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.plot_info" title="Link to this definition"></a></dt>
+<dd><p>Generate plots based on the specified topic.</p>
+<dl class="simple">
+<dt>This method supports two types of plots:</dt><dd><ul class="simple">
+<li><p>‘missing_values’: will generate a plot showing the missing values in the dataframes.</p></li>
+<li><p>‘normality’: will generate a bar plot to check the normality of the data in the dataframes.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>about</strong> (<em>str</em>) – The topic for the plot. Must be either ‘missing_values’ or ‘normality’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.keep_common_samples">
+<span class="sig-name descname"><span class="pre">keep_common_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.keep_common_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.keep_common_samples" title="Link to this definition"></a></dt>
+<dd><p>Keep only the common samples or rows using the index column in dataframes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.remove_empty_features">
+<span class="sig-name descname"><span class="pre">remove_empty_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.remove_empty_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.remove_empty_features" title="Link to this definition"></a></dt>
+<dd><p>Remove columns with more than a certain percentage of missing values from dataframes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>threshold</strong> (<em>float</em>) – The percentage threshold of missing values to drop a column. It should be between 0 and 100.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.ImputeData">
+<span class="sig-name descname"><span class="pre">ImputeData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'knn'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.ImputeData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.ImputeData" title="Link to this definition"></a></dt>
+<dd><p>Impute missing data in the dataframes.</p>
+<dl class="simple">
+<dt>This method supports five types of imputation methods:</dt><dd><ul class="simple">
+<li><p>‘knn’ will use the K-Nearest Neighbors approach to impute missing values.</p></li>
+<li><p>‘mean’ will use the mean of each column to fill missing values.</p></li>
+<li><p>‘most_frequent’ will use the mode of each column to fill missing values.</p></li>
+<li><p>‘median’ will use the median of each column to fill missing values.</p></li>
+<li><p>‘interpolate’ will use the Interpolation method to fill missing values.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>method</strong> (<em>str</em><em>, </em><em>optional</em>) – The imputation method to use. Options are “knn”, “mean”, “mode”, “median”, and “interpolate”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.scale_dataframes">
+<span class="sig-name descname"><span class="pre">scale_dataframes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scaling_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.scale_dataframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.scale_dataframes" title="Link to this definition"></a></dt>
+<dd><p>Scale the dataFrame based on the specified scale type.</p>
+<dl class="simple">
+<dt>The scaling methods are as follows:</dt><dd><ul class="simple">
+<li><p>‘standardize’ Applies the standard scaler method to each column of the dataframe. This method transforms the data to have a mean of zero and a standard deviation of one. It is useful for reducing the effect of outliers and making the data more normally distributed.</p></li>
+<li><p>‘minmax’ Applies the min-max scaler method to each column of the dataframe. This method transforms the data to have a minimum value of zero and a maximum value of one. It is useful for making the data more comparable and preserving the original distribution.</p></li>
+<li><p>‘robust’ Applies the robust scaler method to each column of the dataframe. This method transforms the data using the median and the interquartile range. It is useful for reducing the effect of outliers and making the data more robust to noise.</p></li>
+<li><p>‘pareto’ Applies the pareto scaling method to each column of the dataframe. This method divides each element by the square root of the standard deviation of the column. It is useful for making the data more homogeneous and reducing the effect of skewness.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scaling_type</strong> (<em>str</em>) – The type of scaling to be applied. It can be one of these: ‘standardize’, ‘minmax’, ‘robust’, or ‘pareto’.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional parameters for specific scaling methods.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.normalize_dataframes">
+<span class="sig-name descname"><span class="pre">normalize_dataframes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalization_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.normalize_dataframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.normalize_dataframes" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>This method supports four types of normalization methods:</dt><dd><ul class="simple">
+<li><p>‘constant sum’ normalization. The default sum is 1, which can  specified using the ‘sum’ keyword argument in kwargs. It is a method used to normalize data such that the sum of values for each observation remains constant. It ensures that the relative contributions of individual features to the total sum are compared rather than the absolute values. This normalization technique is beneficial for comparing samples with different total magnitudes but similar distributions. Mathematically, each observation is normalized by dividing it by the sum of its values, then multiplying by a constant factor to achieve the desired sum.</p></li>
+<li><p>‘L1’ normalization (Lasso Norm or Manhattan Norm): Also known as Lasso Norm or Manhattan Norm. Each observation vector is rescaled by dividing each element by the L1-norm of the vector.. L1-norm of a vector is the sum of the absolute values of its components. Mathematically, for a vector x, L1 normalization is given by: L1-Norm = ∑|x_i|. After L1 normalization, the sum of the absolute values of the elements in each vector becomes 1. Widely used in machine learning tasks such as Lasso regression to encourage sparsity in the solution.</p></li>
+<li><p>‘L2’ normalization (Ridge Norm or Euclidean Norm): Also known as Ridge Norm or Euclidean Norm.Each observation vector is rescaled by dividing each element by the L2-norm of the vector. L2-norm of a vector is the square root of the sum of the squares of its components. Mathematically, for a vector x, L2 normalization is given by: L2-Norm = √∑x_i^2. After L2 normalization, the Euclidean distance (or the magnitude) of each vector becomes 1. Widely used in various machine learning algorithms such as logistic regression, support vector machines, and neural networks.</p></li>
+<li><p>‘max’ normalization (Maximum Normalization): Scales each feature in the dataset by dividing it by the maximum absolute value of that feature across all observations. Ensures that each feature’s values are within the range [-1, 1] or [0, 1] depending on whether negative values are present or not. Useful when the ranges of features in the dataset are significantly different, preventing certain features from dominating the learning process due to their larger scales. Commonly used in neural networks and deep learning models as part of the data preprocessing step.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Normalize dataframes using different types of normalization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>normalization_type</strong> (<em>str</em>) – The type of normalization to apply. It can be one of these: ‘constant_sum’, ‘L1’, ‘L2’, or ‘max’.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for some normalization types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the provided method is not ‘constant_sum’, ‘L1’ ,’L2’ or ‘max</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.transform_dataframes">
+<span class="sig-name descname"><span class="pre">transform_dataframes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformation_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.transform_dataframes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.transform_dataframes" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>The transformation methods are as follows:</dt><dd><ul class="simple">
+<li><p>‘cubicroot’: Applies the cube root function to each element of the dataframe.</p></li>
+<li><p>‘log10’: Applies the base 10 logarithm function to each element of the dataframe.</p></li>
+<li><p>‘log’: Applies the natural logarithm function to each element of the dataframe.</p></li>
+<li><p>‘log2’: Applies the base 2 logarithm function to each element of the dataframe.</p></li>
+<li><p>‘sqrt’: Applies the square root function to each element of the dataframe.</p></li>
+<li><p>‘powertransformer’: Applies the power transformer method to each column of the dataframe. This method transforms the data to make it more Gaussian-like. It supports two methods: ‘yeo-johnson’ and ‘box-cox’. The default method is ‘yeo-johnson’, which can handle both positive and negative values. The ‘box-cox’ method can only handle positive values. The method can be specified using the ‘method’ keyword argument in kwargs.</p></li>
+<li><p>‘quantiletransformer’: Applies the quantile transformer method to each column of the dataframe. This method transforms the data to follow a uniform or a normal distribution. It supports two output distributions: ‘uniform’ and ‘normal’. The default distribution is ‘uniform’. The distribution can be specified using the ‘output_distribution’ keyword argument in kwargs.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Transform dataframes using different types of mathematical transformations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>transformation_type</strong> (<em>str</em>) – The type of transformation to apply. It can be one of these: ‘cubicroot’, ‘log10’, ‘log’, ‘log2’, ‘sqrt’, ‘powertransformer’, or ‘quantiletransformer’.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for some transformation types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValueError if the transformation_type is not one of the valid options.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.fuseFeatures">
+<span class="sig-name descname"><span class="pre">fuseFeatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.fuseFeatures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.fuseFeatures" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>The fusion methods are as follows:</dt><dd><ul class="simple">
+<li><p>‘pca’: Principal Component Analysis, a linear dimensionality reduction technique that projects the data onto a lower-dimensional subspace that maximizes the variance.</p></li>
+<li><p>‘ica’: Independent Component Analysis, a linear dimensionality reduction technique that separates the data into independent sources based on the assumption of statistical independence.</p></li>
+<li><p>‘ipca’: Incremental Principal Component Analysis, a variant of PCA that allows for online updates of the components without requiring access to the entire dataset.</p></li>
+<li><p>‘cca’: Canonical Correlation Analysis, a linear dimensionality reduction technique that finds the linear combinations of two sets of variables that are maximally correlated with each other.</p></li>
+<li><p>‘tsne’: t-distributed Stochastic Neighbor Embedding, a non-linear dimensionality reduction technique that preserves the local structure of the data by embedding it in a lower-dimensional space with a probability distribution that matches the pairwise distances in the original space.</p></li>
+<li><p>‘kpca’: Kernel Principal Component Analysis, a non-linear extension of PCA that uses a kernel function to map the data into a higher-dimensional feature space where it is linearly separable.</p></li>
+<li><p>‘rks’: Random Kitchen Sinks, a non-linear dimensionality reduction technique that uses random projections to approximate a kernel function and map the data into a lower-dimensional feature space.</p></li>
+<li><p>‘SEM’: Structural Equation Modeling, a statistical technique that tests the causal relationships between multiple variables using a combination of regression and factor analysis.</p></li>
+<li><p>‘isomap’: Isometric Mapping, a non-linear dimensionality reduction technique that preserves the global structure of the data by embedding it in a lower-dimensional space with a geodesic distance that approximates the shortest path between points in the original space.</p></li>
+<li><p>‘lle’: Locally Linear Embedding, a non-linear dimensionality reduction technique that preserves the local structure of the data by reconstructing each point as a linear combination of its neighbors and embedding it in a lower-dimensional space that minimizes the reconstruction error.</p></li>
+<li><p>‘autoencoder’: A type of neural network that learns to encode the input data into a lower-dimensional latent representation and decode it back to the original data, minimizing the reconstruction error.</p></li>
+<li><p>‘plsda’: Partial Least Squares Discriminant Analysis, a supervised dimensionality reduction technique that finds the linear combinations of the features that best explain both the variance and the correlation with the target variable.</p></li>
+<li><p>‘tensordecompose’: Tensor Decomposition, a technique that decomposes a multi-dimensional array (tensor) into a set of lower-dimensional arrays (factors) that capture the latent structure and interactions of the data.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Fuse the features of multiple dataframes using different methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_components</strong> (<em>int</em>) – The number of components use for the fusion.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – The method to use for the fusion. It can be one of these: ‘pca’, ‘ica’, ‘ipca’, ‘cca’, ‘tsne’, ‘kpca’, ‘rks’, ‘SEM’, ‘isomap’, ‘lle’, ‘autoencoder’, ‘plsda’, or ‘tensordecompose’.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for specific fusion methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValueError if the method is not one of the valid options.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.fuseFeaturesTrain">
+<span class="sig-name descname"><span class="pre">fuseFeaturesTrain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.fuseFeaturesTrain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.fuseFeaturesTrain" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.fuseFeaturesTest">
+<span class="sig-name descname"><span class="pre">fuseFeaturesTest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.fuseFeaturesTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.fuseFeaturesTest" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.evaluate_fusion_models">
+<span class="sig-name descname"><span class="pre">evaluate_fusion_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cca',</span> <span class="pre">'pca']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.evaluate_fusion_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.evaluate_fusion_models" title="Link to this definition"></a></dt>
+<dd><p>Evaluate different fusion models on the dataframes and prediction labels.</p>
+<p>The fusion methods are as follows:</p>
+<ul class="simple">
+<li><p>‘pca’: Principal Component Analysis</p></li>
+<li><p>‘ica’: Independent Component Analysis</p></li>
+<li><p>‘ipca’: Incremental Principal Component Analysis</p></li>
+<li><p>‘cca’: Canonical Correlation Analysis</p></li>
+<li><p>‘tsne’: t-distributed Stochastic Neighbor Embedding</p></li>
+<li><p>‘kpca’: Kernel Principal Component Analysis</p></li>
+<li><p>‘rks’: Random Kitchen Sinks</p></li>
+<li><p>‘SEM’: Structural Equation Modeling</p></li>
+<li><p>‘autoencoder’: Autoencoder</p></li>
+<li><p>‘tensordecompose’: Tensor Decomposition</p></li>
+<li><p>‘plsda’: Partial Least Squares Discriminant Analysis</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_components</strong> (<em>int</em>) – The number of components use for the fusion. The default is 10.</p></li>
+<li><p><strong>n_folds</strong> (<em>int</em>) – The number of folds to use for cross-validation. The default is 10.</p></li>
+<li><p><strong>methods</strong> (<em>list</em>) – A list of fusion methods to apply. The default is [‘cca’, ‘pca’].</p></li>
+<li><p><strong>regression</strong> (<em>bool</em>) – If want to create a regression model. The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValueError if any of the methods are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.fusionData.fusionData.evaluate_fusion_models_nfold">
+<span class="sig-name descname"><span class="pre">evaluate_fusion_models_nfold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_folds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cca',</span> <span class="pre">'pca']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/fusionData.html#fusionData.evaluate_fusion_models_nfold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.fusionData.fusionData.evaluate_fusion_models_nfold" title="Link to this definition"></a></dt>
+<dd><p>Evaluate n-fold cross validations of different fusion models on the dataframes and prediction labels.</p>
+<p>The fusion methods are as follows:</p>
+<ul class="simple">
+<li><p>‘pca’: Principal Component Analysis</p></li>
+<li><p>‘ica’: Independent Component Analysis</p></li>
+<li><p>‘ipca’: Incremental Principal Component Analysis</p></li>
+<li><p>‘cca’: Canonical Correlation Analysis</p></li>
+<li><p>‘tsne’: t-distributed Stochastic Neighbor Embedding</p></li>
+<li><p>‘kpca’: Kernel Principal Component Analysis</p></li>
+<li><p>‘rks’: Random Kitchen Sinks</p></li>
+<li><p>‘SEM’: Structural Equation Modeling</p></li>
+<li><p>‘autoencoder’: Autoencoder</p></li>
+<li><p>‘tensordecompose’: Tensor Decomposition</p></li>
+<li><p>‘plsda’: Partial Least Squares Discriminant Analysis</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_components</strong> (<em>int</em>) – The number of components use for the fusion. The default is 10.</p></li>
+<li><p><strong>n_folds</strong> (<em>int</em>) – The number of folds to use for cross-validation. The default is 10.</p></li>
+<li><p><strong>methods</strong> (<em>list</em>) – A list of fusion methods to apply. The default is [‘cca’, ‘pca’].</p></li>
+<li><p><strong>regression</strong> (<em>bool</em>) – If want to create a regression model. The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValueError if any of the methods are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-FeatureDice.preprocess_data">
+<span id="featuredice-preprocess-data-module"></span><h2>FeatureDice.preprocess_data module<a class="headerlink" href="#module-FeatureDice.preprocess_data" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.preprocess_data.clear_and_process_data">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.preprocess_data.</span></span><span class="sig-name descname"><span class="pre">clear_and_process_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_label_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/FeatureDice/preprocess_data.html#clear_and_process_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.preprocess_data.clear_and_process_data" title="Link to this definition"></a></dt>
+<dd><p>Read data from CSV files, set the specified ID column as the row index, and remove it.
+Also, change the column name of the prediction label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csv_files</strong> (<em>dict</em>) – Dictionary with dataset names as keys and CSV file paths as values.</p></li>
+<li><p><strong>id_column</strong> (<em>str</em>) – The column name containing IDs to set as the row index.</p></li>
+<li><p><strong>prediction_label_column</strong> (<em>str</em>) – The current column name containing prediction labels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with dataset names as keys and processed DataFrames as values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.preprocess_data.normalize_to_constant_sum">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.preprocess_data.</span></span><span class="sig-name descname"><span class="pre">normalize_to_constant_sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constant_sum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/preprocess_data.html#normalize_to_constant_sum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.preprocess_data.normalize_to_constant_sum" title="Link to this definition"></a></dt>
+<dd><p>Normalizes the values in a dataframe to a constant sum along the specified axis.</p>
+<p>This function divides each value in the dataframe by the sum of all values in its row or column (depending on the specified axis), and then multiplies the result by a constant sum. The result is a dataframe where the sum of all values in each row or column equals the constant sum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to normalize.</p></li>
+<li><p><strong>constant_sum</strong> (<em>float</em><em>, </em><em>optional</em>) – The constant sum to which the values should be normalized. Defaults to 1.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em>) – The axis along which to normalize the values. If 0, normalize along the columns. If 1, normalize along the rows. Defaults to 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The normalized dataframe.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the specified axis is not 0 or 1.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.preprocess_data.show_dataframe_info">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.preprocess_data.</span></span><span class="sig-name descname"><span class="pre">show_dataframe_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/preprocess_data.html#show_dataframe_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.preprocess_data.show_dataframe_info" title="Link to this definition"></a></dt>
+<dd><p>Show the number of features and samples in each DataFrame and check for common rows based on row indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataframes</strong> (<em>dict</em>) – Dictionary with dataset names as keys and Pandas DataFrames as values.</p>
+</dd>
+<dt class="field-even">Output<span class="colon">:</span></dt>
+<dd class="field-even"><p>Prints a table summarizing the number of samples, features for each dataset and number of missing values.
+Prints the number of common rows across datasets based on row indices.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.preprocess_data.check_missing_values">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.preprocess_data.</span></span><span class="sig-name descname"><span class="pre">check_missing_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/FeatureDice/preprocess_data.html#check_missing_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.preprocess_data.check_missing_values" title="Link to this definition"></a></dt>
+<dd><p>Checks for missing values in each dataframe in a dictionary of dataframes and returns a dataframe with the results.</p>
+<p>This function iterates over each dataframe in the provided dictionary. For each dataframe, it calculates the number and percentage of missing values in each column. It then creates a Pandas Series with the dataset name, column name, number and percentage of missing values. The results are stored in a list which is then converted into a dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataframes</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>pd.DataFrame</em><em>]</em>) – A dictionary where the key is the name of the dataframe and the value is the dataframe itself.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dataframe where each row corresponds to a dataframe from the input dictionary and each column corresponds to the number and percentage of missing values in each column of the respective dataframe.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.preprocess_data.remove_columns_by_missing_threshold">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.preprocess_data.</span></span><span class="sig-name descname"><span class="pre">remove_columns_by_missing_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/preprocess_data.html#remove_columns_by_missing_threshold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.preprocess_data.remove_columns_by_missing_threshold" title="Link to this definition"></a></dt>
+<dd><p>Removes columns from each dataframe in a dictionary of dataframes based on a missing value threshold.</p>
+<p>This function iterates over each dataframe in the provided dictionary. For each dataframe, it calculates the minimum count of non-null values required based on the provided threshold. It then drops the columns which do not have the required number of non-null values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataframes</strong> (<em>dict</em><em> of </em><em>pandas.DataFrame</em>) – A dictionary where the key is the name of the dataframe and the value is the dataframe itself.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The percentage of missing values allowed in the column. If a column has more missing values than this threshold, it will be dropped.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The original dictionary of dataframes, but with columns dropped based on the missing value threshold.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict of pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-FeatureDice.saving_data">
+<span id="featuredice-saving-data-module"></span><h2>FeatureDice.saving_data module<a class="headerlink" href="#module-FeatureDice.saving_data" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.saving_data.save_train_test_data_n_fold">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.saving_data.</span></span><span class="sig-name descname"><span class="pre">save_train_test_data_n_fold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/saving_data.html#save_train_test_data_n_fold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.saving_data.save_train_test_data_n_fold" title="Link to this definition"></a></dt>
+<dd><p>This function saves the training and testing data for n-fold cross validation.</p>
+<p>Parameters:
+dataframes (dict): A dictionary where the key is the name of the dataframe and the value is the dataframe itself.
+prediction_labels (Series): The labels for prediction.
+train_index (list): The indices for the training data.
+test_index (list): The indices for the testing data.
+output_dir (str): The directory where the training and testing data will be saved.</p>
+<p>Returns:
+train_dataframes (dict): A dictionary where the key is the name of the dataframe and the value is the training data.
+test_dataframes (dict): A dictionary where the key is the name of the dataframe and the value is the testing data.
+y_train (Series): The training labels for prediction.
+y_test (Series): The testing labels for prediction.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.saving_data.save_train_test_data">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.saving_data.</span></span><span class="sig-name descname"><span class="pre">save_train_test_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/saving_data.html#save_train_test_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.saving_data.save_train_test_data" title="Link to this definition"></a></dt>
+<dd><p>This function saves the training and testing data.</p>
+<p>Parameters:
+dataframes (dict): A dictionary where the key is the name of the dataframe and the value is the dataframe itself.
+prediction_labels (Series): The labels for prediction.
+output_dir (str): The directory where the training and testing data will be saved.</p>
+<p>Returns:
+train_dataframes (dict): A dictionary where the key is the name of the dataframe and the value is the training data.
+test_dataframes (dict): A dictionary where the key is the name of the dataframe and the value is the testing data.
+y_train (Series): The training labels for prediction.
+y_test (Series): The testing labels for prediction.</p>
+</dd></dl>
+
+</section>
+<section id="module-FeatureDice.analyse_data">
+<span id="featuredice-analyse-data-module"></span><h2>FeatureDice.analyse_data module<a class="headerlink" href="#module-FeatureDice.analyse_data" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.ccafuse">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.analyse_data.</span></span><span class="sig-name descname"><span class="pre">ccafuse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainX</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'concat'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#ccafuse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.ccafuse" title="Link to this definition"></a></dt>
+<dd><p>This function performs Canonical Correlation Analysis (CCA) fusion on the input data.</p>
+<p>Parameters:
+trainX (pd.DataFrame): The first input dataset.
+trainY (pd.DataFrame): The second input dataset.
+n_components (int): The number of components for PCA and CCA.
+mode (str, optional): The mode of fusion, either ‘concat’ for concatenation or any other string for summation. Defaults to ‘concat’.</p>
+<p>Returns:
+pd.DataFrame: The transformed data after CCA fusion.</p>
+<p>The function first applies PCA to both input datasets, reducing their dimensions to ‘n_components’.
+Then, it applies CCA to find a basis that maximizes the correlation of the projections of the datasets onto this basis.
+Depending on the ‘mode’, it either concatenates (‘concat’) or sums (any other string) the CCA-transformed datasets.
+The resulting dataset is returned as a DataFrame with columns named ‘CCA1’, ‘CCA2’, …, ‘CCAn’ and the same index as ‘trainX’.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.apply_analysis_nonlinear1">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.analyse_data.</span></span><span class="sig-name descname"><span class="pre">apply_analysis_nonlinear1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analysis_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#apply_analysis_nonlinear1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.apply_analysis_nonlinear1" title="Link to this definition"></a></dt>
+<dd><p>Apply various nonlinear fusion techniques.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pandas.DataFrame</em>) – Input data for analysis.</p></li>
+<li><p><strong>analysis_type</strong> (<em>str</em>) – The type of analysis to be applied.</p></li>
+<li><p><strong>n_components</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of components to extract (for tsne, kpca, lle, isomap, rks, SpectralEmbedding).</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional parameters for specific analysis methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transformed pandas DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.apply_analysis_nonlinear2">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.analyse_data.</span></span><span class="sig-name descname"><span class="pre">apply_analysis_nonlinear2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analysis_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#apply_analysis_nonlinear2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.apply_analysis_nonlinear2" title="Link to this definition"></a></dt>
+<dd><p>Apply various nonlinear fusion techniques.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pandas.DataFrame</em>) – Input data for analysis.</p></li>
+<li><p><strong>analysis_type</strong> (<em>str</em>) – The type of analysis to be applied.</p></li>
+<li><p><strong>n_components</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of components to extract (for isomap).</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional parameters for specific analysis methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transformed pandas DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.DynamicAutoencoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FeatureDice.analyse_data.</span></span><span class="sig-name descname"><span class="pre">DynamicAutoencoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_sizes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#DynamicAutoencoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.DynamicAutoencoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>A dynamic autoencoder class that can be used to encode and decode data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder</strong> (<em>torch.nn.Sequential</em>) – The encoder part of the autoencoder. It is a sequence of Linear and ReLU layers.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Sequential</em>) – The decoder part of the autoencoder. It is a sequence of Linear and ReLU layers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>input_size</strong> (<em>int</em>) – The size of the input data.</p></li>
+<li><p><strong>hidden_sizes</strong> (<em>list</em>) – The sizes of the hidden layers in the autoencoder.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Method forward(x)<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Encodes and then decodes the input data.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.DynamicAutoencoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#DynamicAutoencoder.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.DynamicAutoencoder.forward" title="Link to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.apply_analysis_nonlinear3">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.analyse_data.</span></span><span class="sig-name descname"><span class="pre">apply_analysis_nonlinear3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analysis_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_sizes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#apply_analysis_nonlinear3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.apply_analysis_nonlinear3" title="Link to this definition"></a></dt>
+<dd><p>Applies a specified nonlinear analysis to the input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pandas.DataFrame</em>) – The input data to be analyzed.</p></li>
+<li><p><strong>analysis_type</strong> (<em>str</em>) – The type of analysis to be applied. Currently, only ‘autoencoder’ is supported.</p></li>
+<li><p><strong>lr</strong> (<em>float</em><em>, </em><em>optional</em>) – The learning rate for the optimizer. Default is 0.0001.</p></li>
+<li><p><strong>num_epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of epochs for training the autoencoder. Default is 50.</p></li>
+<li><p><strong>hidden_sizes</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – The sizes of the hidden layers in the autoencoder. Default is [128, 64, 36, 18].</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The encoded data if the analysis type is ‘autoencoder’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the analysis type is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.apply_analysis_nonlinear4">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.analyse_data.</span></span><span class="sig-name descname"><span class="pre">apply_analysis_nonlinear4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analysis_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#apply_analysis_nonlinear4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.apply_analysis_nonlinear4" title="Link to this definition"></a></dt>
+<dd><p>Apply various multivariate analysis techniques.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pandas.DataFrame</em>) – Input data for analysis.</p></li>
+<li><p><strong>analysis_type</strong> (<em>str</em>) – The type of analysis to be applied.</p></li>
+<li><p><strong>n_components</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of components to extract (for isomap).</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional parameters for specific analysis methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transformed pandas DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.apply_analysis_linear1">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.analyse_data.</span></span><span class="sig-name descname"><span class="pre">apply_analysis_linear1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analysis_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#apply_analysis_linear1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.apply_analysis_linear1" title="Link to this definition"></a></dt>
+<dd><p>Apply various multivariate analysis techniques.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pandas.DataFrame</em>) – Input data for analysis.</p></li>
+<li><p><strong>analysis_type</strong> (<em>str</em>) – The type of analysis to be applied.</p></li>
+<li><p><strong>n_components</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of components to extract (for PCA, ICA, IPCA).</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional parameters for specific analysis methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transformed pandas DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.analyse_data.apply_analysis_linear2">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.analyse_data.</span></span><span class="sig-name descname"><span class="pre">apply_analysis_linear2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traindata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analysis_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/analyse_data.html#apply_analysis_linear2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.analyse_data.apply_analysis_linear2" title="Link to this definition"></a></dt>
+<dd><p>Apply various multivariate analysis techniques.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pandas.DataFrame</em>) – Input data for analysis.</p></li>
+<li><p><strong>analysis_type</strong> (<em>str</em>) – The type of analysis to be applied.</p></li>
+<li><p><strong>n_components</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of components to extract (for PCA, ICA, IPCA).</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional parameters for specific analysis methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transformed pandas DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-FeatureDice.plot_data">
+<span id="featuredice-plot-data-module"></span><h2>FeatureDice.plot_data module<a class="headerlink" href="#module-FeatureDice.plot_data" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.plot_data.plot_missing_values">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.plot_data.</span></span><span class="sig-name descname"><span class="pre">plot_missing_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/plot_data.html#plot_missing_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.plot_data.plot_missing_values" title="Link to this definition"></a></dt>
+<dd><p>Plot stacked barcharts of missing vs non-missing values in the columns of each dataframe in a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_list</strong> (<em>List</em><em>[</em><em>pd.DataFrame</em><em>]</em>) – A list of Pandas DataFrames with missing values.</p></li>
+<li><p><strong>dataset_names</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Names of the datasets corresponding to each dataframe in df_list.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save the plots. If None, the plots are shown. If provided, the plots are saved to this directory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Output<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matplotlib figures with the barcharts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.plot_data.barplot_normality_check">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.plot_data.</span></span><span class="sig-name descname"><span class="pre">barplot_normality_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/plot_data.html#barplot_normality_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.plot_data.barplot_normality_check" title="Link to this definition"></a></dt>
+<dd><p>Creates a barplot of p-values for normality test in Python for each dataframe in a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_list</strong> (<em>list</em><em> of </em><em>pandas.DataFrame</em>) – The list of dataframes to be tested for normality.</p></li>
+<li><p><strong>dataset_names</strong> (<em>list</em><em> of </em><em>str</em>) – The names of the datasets corresponding to each dataframe in df_list.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – The significance level for the normality test. The default is 0.05.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory to save the plots. If None, the plots are shown. If provided, the plots are saved to this directory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Output<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matplotlib figures with the barcharts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.plot_data.plot_model_boxplot">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.plot_data.</span></span><span class="sig-name descname"><span class="pre">plot_model_boxplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/plot_data.html#plot_model_boxplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.plot_data.plot_model_boxplot" title="Link to this definition"></a></dt>
+<dd><p>Plots the performance metrics of different models on a boxplot chart.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metrics_df</strong> (<em>pd.DataFrame</em>) – The dataframe containing the performance metrics of different models.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory where the plot will be saved. If None, the plot will be displayed without being saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Output<span class="colon">:</span></dt>
+<dd class="field-even"><p>Matplotlib figures with the boxplot charts.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The metrics are : AUC, Accuracy, Precision, Recall, f1 score, Balanced accuracy, MCC and Kappa for classification. R2 Score and MSE for regression.</p>
+<ul class="simple">
+<li><p><strong>AUC</strong>: The area under the receiver operating characteristic curve, which measures the trade-off between the true positive rate and the false positive rate.</p></li>
+<li><p><strong>Accuracy</strong>: The proportion of correctly classified instances among the total number of instances.</p></li>
+<li><p><strong>Precision</strong>: The proportion of correctly classified positive instances among the predicted positive instances.</p></li>
+<li><p><strong>Recall</strong>: The proportion of correctly classified positive instances among the actual positive instances.</p></li>
+<li><p><strong>f1 score</strong>: The harmonic mean of precision and recall, which balances both metrics.</p></li>
+<li><p><strong>Balanced accuracy</strong>: The average of recall obtained on each class, which is useful for imbalanced datasets.</p></li>
+<li><p><strong>MCC</strong>: The Matthews correlation coefficient, which measures the quality of a binary classification, taking into account true and false positives and negatives.</p></li>
+<li><p><strong>Kappa</strong>: The Cohen’s kappa coefficient, which measures the agreement between two raters, adjusting for the chance agreement.</p></li>
+<li><p><strong>R2 Score</strong>: The statistical measure that indicates the proportion of variance in the dependent variable that’s predictable from the independent variable(s).</p></li>
+<li><p><strong>MSE(Mean Squared Error)</strong>: The average of the squared differences between the actual and predicted values, used as a loss function in regression problems.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="FeatureDice.plot_data.plot_model_metrics">
+<span class="sig-prename descclassname"><span class="pre">FeatureDice.plot_data.</span></span><span class="sig-name descname"><span class="pre">plot_model_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FeatureDice/plot_data.html#plot_model_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#FeatureDice.plot_data.plot_model_metrics" title="Link to this definition"></a></dt>
+<dd><p>Plot the performance metrics of different models on a bar chart.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metrics_df</strong> (<em>pd.DataFrame</em>) – A pandas DataFrame with the model names, types, and metrics as columns.</p></li>
+<li><p><strong>save_dir</strong> (<em>str</em><em> or </em><em>None</em>) – The directory to save the plots. If None, the plots are shown instead.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The metrics are : AUC, Accuracy, Precision, Recall, f1 score, Balanced accuracy, MCC and Kappa for classification. R2 Score and MSE for regression.</p>
+<ul class="simple">
+<li><p><strong>AUC</strong>: The area under the receiver operating characteristic curve, which measures the trade-off between the true positive rate and the false positive rate.</p></li>
+<li><p><strong>Accuracy</strong>: The proportion of correctly classified instances among the total number of instances.</p></li>
+<li><p><strong>Precision</strong>: The proportion of correctly classified positive instances among the predicted positive instances.</p></li>
+<li><p><strong>Recall</strong>: The proportion of correctly classified positive instances among the actual positive instances.</p></li>
+<li><p><strong>f1 score</strong>: The harmonic mean of precision and recall, which balances both metrics.</p></li>
+<li><p><strong>Balanced accuracy</strong>: The average of recall obtained on each class, which is useful for imbalanced datasets.</p></li>
+<li><p><strong>MCC</strong>: The Matthews correlation coefficient, which measures the quality of a binary classification, taking into account true and false positives and negatives.</p></li>
+<li><p><strong>Kappa</strong>: The Cohen’s kappa coefficient, which measures the agreement between two raters, adjusting for the chance agreement.</p></li>
+<li><p><strong>R2 Score</strong>: The statistical measure that indicates the proportion of variance in the dependent variable that’s predictable from the independent variable(s).</p></li>
+<li><p><strong>MSE(Mean Squared Error)</strong>: The average of the squared differences between the actual and predicted values, used as a loss function in regression problems.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-FeatureDice">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-FeatureDice" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="FeatureDice" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Suvendu Kumar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

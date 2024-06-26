@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Normalization Methods &mdash; ChemicalDice 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=7026087e"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Fusion Methods" href="FusionMethods.html" />
+    <link rel="prev" title="Imputation Methods" href="ImputationMethods.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            ChemicalDice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImputationMethods.html">Imputation Methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Normalization Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scaling">Scaling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transforming">Transforming</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="FusionMethods.html">Fusion Methods</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Details of modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">ChemicalDice</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ChemicalDice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Normalization Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/pages/methods/NormalizationMethods.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="normalization-methods">
+<h1>Normalization Methods<a class="headerlink" href="#normalization-methods" title="Link to this heading"></a></h1>
+<p>Normalization, scaling, and transformation methods are essential in data
+fusion as they help to standardize and harmonize data from different
+sources, making it more comparable and suitable for further analysis.
+Normalization adjusts the values in the dataset to a common scale
+without distorting the differences in the range of values or losing
+information. Scaling modifies the range of the data to ensure that
+certain features do not dominate others due to their larger scales.
+Transformation methods, on the other hand, can make the data more
+suitable for a specific analysis or model by adjusting the distribution
+or relationship between variables. These methods collectively enhance
+the quality and reliability of the fused data, leading to improved
+insights and predictions.</p>
+<section id="normalization">
+<h2>Normalization<a class="headerlink" href="#normalization" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p><strong>Constant Sum Normalization</strong>: This method normalizes data such that
+the sum of values for each observation remains constant. It ensures
+that the relative contributions of individual features to the total
+sum are compared rather than the absolute values. This normalization
+technique is beneficial for comparing samples with different total
+magnitudes but similar distributions. Mathematically, each
+observation is normalized by dividing it by the sum of its values,
+then multiplying by a constant factor to achieve the desired sum.</p></li>
+<li><p><strong>L1 Normalization (Lasso Norm or Manhattan Norm)</strong>: Also known as
+Lasso Norm or Manhattan Norm, this method rescales each observation
+vector by dividing each element by the L1-norm of the vector. The
+L1-norm of a vector is the sum of the absolute values of its
+components. Mathematically, for a vector x, L1 normalization is given
+by: After L1 normalization, the sum of the absolute values of the
+elements in each vector becomes 1. This method is widely used in
+machine learning tasks such as Lasso regression to encourage sparsity
+in the solution.</p>
+<div class="math notranslate nohighlight">
+\[\text{L1 normalized x } = `\left[ \frac{x_1}{\sum_{i=1}^{n} |x_i|}, \frac{x_2}{\sum_{i=1}^{n} |x_i|}, \ldots, \frac{x_n}{\sum_{i=1}^{n} |x_i|} \right]`\]</div>
+</li>
+<li><p><strong>L2 Normalization (Ridge Norm or Euclidean Norm)</strong>: Also known as
+Ridge Norm or Euclidean Norm, this method rescales each observation
+vector by dividing each element by the L2-norm of the vector. The
+L2-norm of a vector is the square root of the sum of the squares of
+its components. Mathematically, for a vector x, L2 normalization is
+given by: After L2 normalization, the Euclidean distance (or the
+magnitude) of each vector becomes 1. This method is widely used in
+various machine learning algorithms such as logistic regression,
+support vector machines, and neural networks.</p>
+<div class="math notranslate nohighlight">
+\[\text{L2 normalized x} = `\left[ \frac{x_1}{\sqrt{\sum_{i=1}^{n} x_i^2}}, \frac{x_2}{\sqrt{\sum_{i=1}^{n} x_i^2}}, \ldots, \frac{x_n}{\sqrt{\sum_{i=1}^{n} x_i^2}} \right]`\]</div>
+</li>
+<li><p><strong>Max Normalization (Maximum Normalization)</strong>: This method scales
+each feature in the dataset by dividing it by the maximum absolute
+value of that feature across all observations. It ensures that each
+feature’s values are within the range [-1, 1] or [0, 1] depending on
+whether negative values are present or not. This method is useful
+when the ranges of features in the dataset are significantly
+different, preventing certain features from dominating the learning
+process due to their larger scales. It is commonly used in neural
+networks and deep learning models as part of the data preprocessing
+step.</p></li>
+</ol>
+</section>
+<section id="scaling">
+<h2>Scaling<a class="headerlink" href="#scaling" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p><strong>Standardize</strong>: This method applies the standard scaler method to
+each column of the dataframe. It transforms the data to have a mean
+of zero and a standard deviation of one. This is useful for reducing
+the effect of outliers and making the data more normally distributed.
+Mathematically, for a given feature x, standardization is given by:</p>
+<div class="math notranslate nohighlight">
+\[\frac{x - \text{mean}(x)}{\text{std}(x)}\]</div>
+</li>
+<li><p><strong>Min-Max</strong>: This method applies the min-max scaler method to each
+column of the dataframe. It transforms the data to have a minimum
+value of zero and a maximum value of one. This is useful for making
+the data more comparable and preserving the original distribution.
+Mathematically, for a given feature x, min-max scaling is given by:</p>
+<div class="math notranslate nohighlight">
+\[\frac{x - \min(x)}{\max(x) - \min(x)}\]</div>
+</li>
+<li><p><strong>Robust</strong>: This method applies the robust scaler method to each
+column of the dataframe. It transforms the data using the median and
+the interquartile range. This is useful for reducing the effect of
+outliers and making the data more robust to noise. Mathematically,
+for a given feature x, robust scaling is given by: where IQR is the
+interquartile range.</p>
+<div class="math notranslate nohighlight">
+\[\frac{x - \text{median}(x)}{\text{IQR}(x)}\]</div>
+</li>
+<li><p><strong>Pareto</strong>: This method applies the pareto scaling method to each
+column of the dataframe. It divides each element by the square root
+of the standard deviation of the column. This is useful for making
+the data more homogeneous and reducing the effect of skewness.
+Mathematically, for a given feature x, pareto scaling is given by:</p>
+<div class="math notranslate nohighlight">
+\[\frac{x}{\sqrt{\text{std}(x)}}\]</div>
+</li>
+</ol>
+</section>
+<section id="transforming">
+<h2>Transforming<a class="headerlink" href="#transforming" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Cube Root Transformation</strong>: This transformation applies the cube
+root function to each element of the data. It is useful for reducing
+the effect of extreme values or outliers.</p></li>
+<li><p><strong>Log10 Transformation</strong>: This transformation applies the base 10
+logarithm function to each element of the data. It is useful for
+reducing the effect of exponential growth or multiplicative factors.</p></li>
+<li><p><strong>Natural Log Transformation</strong>: This transformation applies the
+natural logarithm function to each element of the data. It is useful
+for reducing the effect of exponential growth or multiplicative
+factors.</p></li>
+<li><p><strong>Log2 Transformation</strong>: This transformation applies the base 2
+logarithm function to each element of the data. It is useful for
+reducing the effect of exponential growth or multiplicative factors.</p></li>
+<li><p><strong>Square Root Transformation</strong>: This transformation applies the
+square root function to each element of the data. It is useful for
+reducing the effect of square laws or quadratic growth.</p></li>
+<li><p><strong>Power Transformer</strong>: This transformation applies the power
+transformer method to the data. This method transforms the data to
+make it more Gaussian-like. It supports two
+methods: <strong>``yeo-johnson``</strong> and <strong>``box-cox``</strong>.
+The <strong>``yeo-johnson``</strong> method can handle both positive and negative
+values. The <strong>``box-cox``</strong> method can only handle positive values.</p></li>
+<li><p><strong>Quantile Transformer</strong>: This transformation applies the quantile
+transformer method to the data. This method transforms the data to
+follow a uniform or a normal distribution. It supports two output
+distributions: <strong>``uniform``</strong> and <strong>``normal``</strong>.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ImputationMethods.html" class="btn btn-neutral float-left" title="Imputation Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="FusionMethods.html" class="btn btn-neutral float-right" title="Fusion Methods" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Suvendu Kumar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

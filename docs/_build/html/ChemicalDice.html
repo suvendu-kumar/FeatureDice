@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChemicalDice package &mdash; ChemicalDice 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=7026087e"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="ChemicalDice" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ChemicalDice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pages/Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/methods/ImputationMethods.html">Imputation Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/methods/NormalizationMethods.html">Normalization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/methods/FusionMethods.html">Fusion Methods</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Details of modules:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">ChemicalDice</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ChemicalDice package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ChemicalDice.fusionData">fusionData module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.fusionData.fusionData"><code class="docutils literal notranslate"><span class="pre">fusionData</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ChemicalDice.bioactivity">bioactivity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.bioactivity.calculate_descriptors"><code class="docutils literal notranslate"><span class="pre">calculate_descriptors()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ChemicalDice.chemical">chemical module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.chemical.descriptor_calculator"><code class="docutils literal notranslate"><span class="pre">descriptor_calculator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ChemicalDice.quantum">quantum module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.quantum.get_mopac_prerequisites"><code class="docutils literal notranslate"><span class="pre">get_mopac_prerequisites()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.quantum.descriptor_calculator"><code class="docutils literal notranslate"><span class="pre">descriptor_calculator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ChemicalDice.chemberta">chemberta module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.chemberta.smiles_to_embeddings"><code class="docutils literal notranslate"><span class="pre">smiles_to_embeddings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ChemicalDice.ImageMol">ImageMol module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.ImageMol.get_imagemol_prerequisites"><code class="docutils literal notranslate"><span class="pre">get_imagemol_prerequisites()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.ImageMol.image_to_embeddings"><code class="docutils literal notranslate"><span class="pre">image_to_embeddings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ChemicalDice.Grover">Grover module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.Grover.get_grover_prerequisites"><code class="docutils literal notranslate"><span class="pre">get_grover_prerequisites()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ChemicalDice.Grover.get_embeddings"><code class="docutils literal notranslate"><span class="pre">get_embeddings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ChemicalDice">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ChemicalDice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">ChemicalDice</a></li>
+      <li class="breadcrumb-item active">ChemicalDice package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ChemicalDice.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="chemicaldice-package">
+<h1>ChemicalDice package<a class="headerlink" href="#chemicaldice-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-ChemicalDice.fusionData">
+<span id="fusiondata-module"></span><h2>fusionData module<a class="headerlink" href="#module-ChemicalDice.fusionData" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ChemicalDice.fusionData.</span></span><span class="sig-name descname"><span class="pre">fusionData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'labels'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for handling data and performing fusion tasks.
+Initialize fusionData object with provided data paths, label file path, ID column name,
+and prediction label column name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_paths</strong> (<em>dict</em>) – Dictionary of file paths containing the data.</p></li>
+<li><p><strong>label_file_path</strong> (<em>str</em>) – file paths containing the label data.</p></li>
+<li><p><strong>id_column</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the column representing unique identifiers.
+Defaults to “id”.</p></li>
+<li><p><strong>prediction_label_column</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the column containing prediction labels.
+Defaults to “labels”.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">data_paths</span></span></dt>
+<dd><p>List of file paths containing the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">id_column</span></span></dt>
+<dd><p>Name of the column representing unique identifiers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">dataframes</span></span></dt>
+<dd><p>Dictionary containing processed dataframes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">prediction_label</span></span></dt>
+<dd><p>Placeholder for labels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.ShowMissingValues">
+<span class="sig-name descname"><span class="pre">ShowMissingValues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.ShowMissingValues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.ShowMissingValues" title="Link to this definition"></a></dt>
+<dd><p>Prints missing values inside dataframes in fusionData object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.show_info">
+<span class="sig-name descname"><span class="pre">show_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.show_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.show_info" title="Link to this definition"></a></dt>
+<dd><p>Summarize dataframes inside the fusionData object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.plot_info">
+<span class="sig-name descname"><span class="pre">plot_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">about</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.plot_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.plot_info" title="Link to this definition"></a></dt>
+<dd><p>Generate plots for visualizing missing values and to check for normality of data.</p>
+<dl class="simple">
+<dt>This method supports two types of plots:</dt><dd><ul class="simple">
+<li><p>‘missing_values’: will generate a plot showing the missing values in the dataframes.</p></li>
+<li><p>‘normality’: will generate a bar plot to check the normality of the data in the dataframes.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>about</strong> (<em>str</em>) – The topic for the plot. Must be either ‘missing_values’ or ‘normality’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.keep_common_samples">
+<span class="sig-name descname"><span class="pre">keep_common_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.keep_common_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.keep_common_samples" title="Link to this definition"></a></dt>
+<dd><p>Keep only the common samples or rows using the id in dataframes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.remove_empty_features">
+<span class="sig-name descname"><span class="pre">remove_empty_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.remove_empty_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.remove_empty_features" title="Link to this definition"></a></dt>
+<dd><p>Remove columns with more than a threshold percentage of missing values from dataframes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>threshold</strong> (<em>float</em>) – The percentage threshold of missing values to drop a column. It should be between 0 and 100.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.ImputeData">
+<span class="sig-name descname"><span class="pre">ImputeData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'knn'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_specific</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.ImputeData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.ImputeData" title="Link to this definition"></a></dt>
+<dd><p>Impute missing data in the dataframes.</p>
+<dl class="simple">
+<dt>This method supports five types of imputation methods:</dt><dd><ul class="simple">
+<li><p>‘knn’ will use the K-Nearest Neighbors approach to impute missing values.</p></li>
+<li><p>‘mean’ will use the mean of each column to fill missing values.</p></li>
+<li><p>‘most_frequent’ will use the mode of each column to fill missing values.</p></li>
+<li><p>‘median’ will use the median of each column to fill missing values.</p></li>
+<li><p>‘interpolate’ will use the Interpolation method to fill missing values.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>method</strong> (<em>str</em><em>, </em><em>optional</em>) – The imputation method to use. Options are “knn”, “mean”, “mode”, “median”, and “interpolate”.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.scale_data">
+<span class="sig-name descname"><span class="pre">scale_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scaling_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.scale_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.scale_data" title="Link to this definition"></a></dt>
+<dd><p>Scale the dataFrame based on the specified scale type.</p>
+<dl class="simple">
+<dt>The scaling methods are as follows:</dt><dd><ul class="simple">
+<li><p>‘standardize’ Applies the standard scaler method to each column of the dataframe. This method transforms the data to have a mean of zero and a standard deviation of one. It is useful for reducing the effect of outliers and making the data more normally distributed.</p></li>
+<li><p>‘minmax’ Applies the min-max scaler method to each column of the dataframe. This method transforms the data to have a minimum value of zero and a maximum value of one. It is useful for making the data more comparable and preserving the original distribution.</p></li>
+<li><p>‘robust’ Applies the robust scaler method to each column of the dataframe. This method transforms the data using the median and the interquartile range. It is useful for reducing the effect of outliers and making the data more robust to noise.</p></li>
+<li><p>‘pareto’ Applies the pareto scaling method to each column of the dataframe. This method divides each element by the square root of the standard deviation of the column. It is useful for making the data more homogeneous and reducing the effect of skewness.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scaling_type</strong> (<em>str</em>) – The type of scaling to be applied. It can be one of these: ‘standardize’, ‘minmax’, ‘robust’, or ‘pareto’.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional parameters for specific scaling methods.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.normalize_data">
+<span class="sig-name descname"><span class="pre">normalize_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalization_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.normalize_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.normalize_data" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>This method supports four types of normalization methods:</dt><dd><ul class="simple">
+<li><p>‘constant sum’ normalization. The default sum is 1, which can  specified using the ‘sum’ keyword argument in kwargs. It is a method used to normalize data such that the sum of values for each observation remains constant. It ensures that the relative contributions of individual features to the total sum are compared rather than the absolute values. This normalization technique is beneficial for comparing samples with different total magnitudes but similar distributions. Mathematically, each observation is normalized by dividing it by the sum of its values, and then multiplying by a constant factor to achieve the desired sum.</p></li>
+<li><p>‘L1’ normalization (Lasso Norm or Manhattan Norm): Also known as Lasso Norm or Manhattan Norm. Each observation vector is rescaled by dividing each element by the L1-norm of the vector.. L1-norm of a vector is the sum of the absolute values of its components. Mathematically, for a vector x, L1 normalization is given by: L1-Norm = ∑|x_i|. After L1 normalization, the sum of the absolute values of the elements in each vector becomes 1. Widely used in machine learning tasks such as Lasso regression to encourage sparsity in the solution.</p></li>
+<li><p>‘L2’ normalization (Ridge Norm or Euclidean Norm): Also known as Ridge Norm or Euclidean Norm. Each observation vector is rescaled by dividing each element by the L2-norm of the vector. L2-norm of a vector is the square root of the sum of the squares of its components. Mathematically, for a vector x, L2 normalization is given by: L2-Norm = √∑x_i^2. After L2 normalization, the Euclidean distance (or the magnitude) of each vector becomes 1. Widely used in various machine learning algorithms such as logistic regression, support vector machines, and neural networks.</p></li>
+<li><p>‘max’ normalization (Maximum Normalization): Scales each feature in the dataset by dividing it by the maximum absolute value of that feature across all observations. Ensures that each feature’s values are within the range [-1, 1] or [0, 1] depending on whether negative values are present or not. Useful when the ranges of features in the dataset are significantly different, preventing certain features from dominating the learning process due to their larger scales. Commonly used in neural networks and deep learning models as part of the data preprocessing step.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Normalize dataframes using different types of normalization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>normalization_type</strong> (<em>str</em>) – The type of normalization to apply. It can be one of these: ‘constant_sum’, ‘L1’, ‘L2’, or ‘max’.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for some normalization types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the provided method is not ‘constant_sum’, ‘L1’ ,’L2’ or ‘max</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.transform_data">
+<span class="sig-name descname"><span class="pre">transform_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformation_type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.transform_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.transform_data" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>The transformation methods are as follows:</dt><dd><ul class="simple">
+<li><p>‘cubicroot’: Applies the cube root function to each element of the dataframe.</p></li>
+<li><p>‘log10’: Applies the base 10 logarithm function to each element of the dataframe.</p></li>
+<li><p>‘log’: Applies the natural logarithm function to each element of the dataframe.</p></li>
+<li><p>‘log2’: Applies the base 2 logarithm function to each element of the dataframe.</p></li>
+<li><p>‘sqrt’: Applies the square root function to each element of the dataframe.</p></li>
+<li><p>‘powertransformer’: Applies the power transformer method to each column of the dataframe. This method transforms the data to make it more Gaussian-like. It supports two methods: ‘yeo-johnson’ and ‘box-cox’. The default method is ‘yeo-johnson’, which can handle both positive and negative values. The ‘box-cox’ method can only handle positive values. The method can be specified using the ‘method’ keyword argument in kwargs.</p></li>
+<li><p>‘quantiletransformer’: Applies the quantile transformer method to each column of the dataframe. This method transforms the data to follow a uniform or a normal distribution. It supports two output distributions: ‘uniform’ and ‘normal’. The default distribution is ‘uniform’. The distribution can be specified using the ‘output_distribution’ keyword argument in kwargs.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Transform dataframes using different types of mathematical transformations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>transformation_type</strong> (<em>str</em>) – The type of transformation to apply. It can be one of these: ‘cubicroot’, ‘log10’, ‘log’, ‘log2’, ‘sqrt’, ‘powertransformer’, or ‘quantiletransformer’.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for some transformation types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValueError if the transformation_type is not one of the valid options.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.fuseFeatures">
+<span class="sig-name descname"><span class="pre">fuseFeatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['pca',</span> <span class="pre">'AER']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">AER_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4096</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ChemicalDice_fusedData'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.fuseFeatures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.fuseFeatures" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>The fusion methods are as follows:</dt><dd><ul class="simple">
+<li><p>‘AER’: Autoencoder Reconstruction Analysis, a autoencoder based feature fusion technique that cross reconstruct data from different modalities and make autoencoders to learn importent features from the data.  Finally the data is converted from its orignal dimention to reduced size of embedding</p></li>
+<li><p>‘pca’: Principal Component Analysis, a linear dimensionality reduction technique that projects the data onto a lower-dimensional subspace that maximizes the variance.</p></li>
+<li><p>‘ica’: Independent Component Analysis, a linear dimensionality reduction technique that separates the data into independent sources based on the assumption of statistical independence.</p></li>
+<li><p>‘ipca’: Incremental Principal Component Analysis, a variant of PCA that allows for online updates of the components without requiring access to the entire dataset.</p></li>
+<li><p>‘cca’: Canonical Correlation Analysis, a linear dimensionality reduction technique that finds the linear combinations of two sets of variables that are maximally correlated with each other.</p></li>
+<li><p>‘tsne’: t-distributed Stochastic Neighbor Embedding, a non-linear dimensionality reduction technique that preserves the local structure of the data by embedding it in a lower-dimensional space with a probability distribution that matches the pairwise distances in the original space.</p></li>
+<li><p>‘kpca’: Kernel Principal Component Analysis, a non-linear extension of PCA that uses a kernel function to map the data into a higher-dimensional feature space where it is linearly separable.</p></li>
+<li><p>‘rks’: Random Kitchen Sinks, a non-linear dimensionality reduction technique that uses random projections to approximate a kernel function and map the data into a lower-dimensional feature space.</p></li>
+<li><p>‘SEM’: Structural Equation Modeling, a statistical technique that tests the causal relationships between multiple variables using a combination of regression and factor analysis.</p></li>
+<li><p>‘isomap’: Isometric Mapping, a non-linear dimensionality reduction technique that preserves the global structure of the data by embedding it in a lower-dimensional space with a geodesic distance that approximates the shortest path between points in the original space.</p></li>
+<li><p>‘lle’: Locally Linear Embedding, a non-linear dimensionality reduction technique that preserves the local structure of the data by reconstructing each point as a linear combination of its neighbors and embedding it in a lower-dimensional space that minimizes the reconstruction error.</p></li>
+<li><p>‘autoencoder’: A type of neural network that learns to encode the input data into a lower-dimensional latent representation and decode it back to the original data, minimizing the reconstruction error.</p></li>
+<li><p>‘plsda’: Partial Least Squares Discriminant Analysis, a supervised dimensionality reduction technique that finds the linear combinations of the features that best explain both the variance and the correlation with the target variable.</p></li>
+<li><p>‘tensordecompose’: Tensor Decomposition, a technique that decomposes a multi-dimensional array (tensor) into a set of lower-dimensional arrays (factors) that capture the latent structure and interactions of the data.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Fuse the features of multiple dataframes using different methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_components</strong> (<em>int</em>) – The number of components use for the fusion.</p></li>
+<li><p><strong>method</strong> – The method to use for the fusion. It can be one of these: ‘pca’, ‘ica’, ‘ipca’, ‘cca’, ‘tsne’, ‘kpca’, ‘rks’, ‘SEM’, ‘isomap’, ‘lle’, ‘autoencoder’, ‘plsda’, or ‘tensordecompose’.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for specific fusion methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValueError if the method is not one of the valid options.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.evaluate_fusion_models">
+<span class="sig-name descname"><span class="pre">evaluate_fusion_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cca',</span> <span class="pre">'pca']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">AER_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4096</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.evaluate_fusion_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.evaluate_fusion_models" title="Link to this definition"></a></dt>
+<dd><p>Evaluate different fusion models on the dataframes and prediction labels.</p>
+<p>The fusion methods are as follows:</p>
+<ul class="simple">
+<li><p>‘AER’: Autoencoder Reconstruction Analysis</p></li>
+<li><p>‘pca’: Principal Component Analysis</p></li>
+<li><p>‘ica’: Independent Component Analysis</p></li>
+<li><p>‘ipca’: Incremental Principal Component Analysis</p></li>
+<li><p>‘cca’: Canonical Correlation Analysis</p></li>
+<li><p>‘tsne’: t-distributed Stochastic Neighbor Embedding</p></li>
+<li><p>‘kpca’: Kernel Principal Component Analysis</p></li>
+<li><p>‘rks’: Random Kitchen Sinks</p></li>
+<li><p>‘SEM’: Structural Equation Modeling</p></li>
+<li><p>‘autoencoder’: Autoencoder</p></li>
+<li><p>‘tensordecompose’: Tensor Decomposition</p></li>
+<li><p>‘plsda’: Partial Least Squares Discriminant Analysis</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_components</strong> (<em>int</em>) – The number of components use for the fusion. The default is 10.</p></li>
+<li><p><strong>n_folds</strong> (<em>int</em>) – The number of folds to use for cross-validation. The default is 10.</p></li>
+<li><p><strong>methods</strong> (<em>list</em>) – A list of fusion methods to apply. The default is [‘cca’, ‘pca’].</p></li>
+<li><p><strong>regression</strong> (<em>bool</em>) – If want to create a regression model. The default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p>ValueError if any of the methods are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.evaluate_fusion_models_nfold">
+<span class="sig-name descname"><span class="pre">evaluate_fusion_models_nfold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fused_data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ChemicalDice_fusedData'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.evaluate_fusion_models_nfold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.evaluate_fusion_models_nfold" title="Link to this definition"></a></dt>
+<dd><p>Perform n-fold cross-validation on fusion models and save the evaluation metrics.This method evaluates the performance of various machine learning models on fused data obtained from ChemDice. It supports both classification and regression tasks and saves the performance metrics for each fold into a CSV file.
+:param folds: The number of folds to use for KFold cross-validation.
+:type folds: int
+:param task_type: The type of task to perform, either ‘classification’ or ‘regression’.
+:type task_type: str
+:param fused_data_path: The path to the directory containing the fused data files, defaults to ‘ChemicalDice_fusedData’.
+:type fused_data_path: str
+:raises ValueError: If the <cite>task_type</cite> is neither ‘classification’ nor ‘regression’.
+:return: None
+.. note:: The method assumes that the prediction labels are stored in <cite>self.prediction_label</cite>.For classification, it evaluates models based on AUC, accuracy, precision, recall, f1 score, balanced accuracy, MCC, and kappa. For regression, it evaluates models based on R2 score, MSE, RMSE, and MAE. The results are saved in a CSV file named ‘Accuracy_Metrics_{method_chemdice}.csv’ in a directory named ‘{folds}_fold_CV_results’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.evaluate_fusion_models_scaffold_split">
+<span class="sig-name descname"><span class="pre">evaluate_fusion_models_scaffold_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fused_data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ChemicalDice_fusedData'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.evaluate_fusion_models_scaffold_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.evaluate_fusion_models_scaffold_split" title="Link to this definition"></a></dt>
+<dd><p>Perform n-fold cross-validation on fusion models and save the evaluation metrics. This method evaluates the performance of various machine learning models on fused data obtained from ChemDice. It supports both classification and regression tasks and saves the performance metrics for each fold into a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>split_type</strong> – The type scaffold dsta split to perform. Three types available  ‘random’, ‘balanced’ or ‘simple’</p></li>
+<li><p><strong>task_type</strong> (<em>str</em>) – The type of task to perform, either ‘classification’ or ‘regression’.</p></li>
+<li><p><strong>fused_data_path</strong> (<em>str</em>) – The path to the directory containing the fused data files, defaults to ‘ChemicalDice_fusedData’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the <cite>task_type</cite> is neither ‘classification’ nor ‘regression’.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The method assumes that the prediction labels are stored in <cite>self.prediction_label</cite>. For classification, it evaluates models based on AUC, accuracy, precision, recall, f1 score, balanced accuracy, MCC, and kappa. For regression, it evaluates models based on R2 score, MSE, RMSE, and MAE. The results are saved in a CSV file named ‘Accuracy_Metrics_{method_chemdice}.csv’ in a directory named ‘scaffold_split_results’.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.get_accuracy_metrics">
+<span class="sig-name descname"><span class="pre">get_accuracy_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.get_accuracy_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.get_accuracy_metrics" title="Link to this definition"></a></dt>
+<dd><p>Retrieve and compile accuracy metrics from cross-validation results.</p>
+<p>This method aggregates the performance metrics from multiple CSV files generated by n-fold cross-validation or scafoold split.
+It calculates the mean performance metrics for each model and sorts the results based on the performance metric
+relevant to the task type (AUC for classification, R2 Score for regression).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>For cross validation result : A tuple containing two DataFrames: <cite>mean_accuracy_metrics</cite> with the mean performance metrics for each model,
+and <cite>Accuracy_metrics</cite> with all the individual fold results. For scaffold split : A tuple containing three DataFrames: <cite>test_metrics</cite>,
+<cite>train_metrics</cite> and <cite>val_metrics</cite>.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.fuseFeaturesTrain_plsda">
+<span class="sig-name descname"><span class="pre">fuseFeaturesTrain_plsda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_dataframes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_label</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.fuseFeaturesTrain_plsda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.fuseFeaturesTrain_plsda" title="Link to this definition"></a></dt>
+<dd><p>Internal function for training of plsda fusion method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.fuseFeaturesTest_plsda">
+<span class="sig-name descname"><span class="pre">fuseFeaturesTest_plsda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataframes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.fuseFeaturesTest_plsda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.fuseFeaturesTest_plsda" title="Link to this definition"></a></dt>
+<dd><p>Internal function for testing of plsda fusion method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.fuseFeaturesTrain_td">
+<span class="sig-name descname"><span class="pre">fuseFeaturesTrain_td</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_dataframes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_label</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.fuseFeaturesTrain_td"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.fuseFeaturesTrain_td" title="Link to this definition"></a></dt>
+<dd><p>Internal function for training of tensordecompose fusion method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.fuseFeaturesTest_td">
+<span class="sig-name descname"><span class="pre">fuseFeaturesTest_td</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataframes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.fuseFeaturesTest_td"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.fuseFeaturesTest_td" title="Link to this definition"></a></dt>
+<dd><p>Internal function for testing of tensordecompose fusion method.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ChemicalDice.bioactivity">
+<span id="bioactivity-module"></span><h2>bioactivity module<a class="headerlink" href="#module-ChemicalDice.bioactivity" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.bioactivity.calculate_descriptors">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.bioactivity.</span></span><span class="sig-name descname"><span class="pre">calculate_descriptors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/bioactivity.html#calculate_descriptors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.bioactivity.calculate_descriptors" title="Link to this definition"></a></dt>
+<dd><p>Calculate bioactivity descriptors using signaturizer for a given set of SMILES strings and save the results to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file</strong> (<em>str</em>) – The path to the input CSV file. The file should contain a column ‘Canonical_SMILES’ with SMILES strings and a column ‘id’ with unique identifiers.</p></li>
+<li><p><strong>output_file</strong> (<em>str</em>) – The path to the output CSV file where the calculated descriptors will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function uses the ‘GLOBAL’ model of the Signaturizer class to calculate descriptors.
+The resulting DataFrame is saved to a CSV file with the columns ‘id’, ‘SMILES’, and descriptor columns.</p>
+</dd></dl>
+
+</section>
+<section id="module-ChemicalDice.chemical">
+<span id="chemical-module"></span><h2>chemical module<a class="headerlink" href="#module-ChemicalDice.chemical" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.chemical.descriptor_calculator">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.chemical.</span></span><span class="sig-name descname"><span class="pre">descriptor_calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/chemical.html#descriptor_calculator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.chemical.descriptor_calculator" title="Link to this definition"></a></dt>
+<dd><p>Calculate molecular descriptors for the molecules in the input file and save the results to the output file.</p>
+<p>This function reads SMILES strings and corresponding SDF file names from an input CSV file, calculates
+molecular descriptors for each molecule, and writes the results to an output CSV file. The descriptors
+are calculated using the mordred package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file</strong> (<em>str</em>) – Path to the input CSV file containing SMILES strings and SDF file names.</p></li>
+<li><p><strong>output_file</strong> (<em>str</em>) – Path to the output CSV file where the calculated descriptors will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ChemicalDice.quantum">
+<span id="quantum-module"></span><h2>quantum module<a class="headerlink" href="#module-ChemicalDice.quantum" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.quantum.get_mopac_prerequisites">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.quantum.</span></span><span class="sig-name descname"><span class="pre">get_mopac_prerequisites</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/quantum.html#get_mopac_prerequisites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.quantum.get_mopac_prerequisites" title="Link to this definition"></a></dt>
+<dd><p>Download and set up the prerequisites for MOPAC and Morse.</p>
+<p>This function performs the following steps:
+1. Downloads the MOPAC tarball from a specified URL.
+2. Extracts the contents of the downloaded tarball.
+3. For Windows systems, downloads a precompiled version of 3D Morse.
+4. For non-Windows systems, downloads the source code of 3D Morse, modifies it to be compatible with the system, and compiles it.</p>
+<p>The function prints messages indicating the progress of the setup process.</p>
+<section id="steps">
+<h3>Steps:<a class="headerlink" href="#steps" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Download MOPAC</strong>: The MOPAC software is downloaded from its official GitHub release page.</p></li>
+<li><p><strong>Extract MOPAC</strong>: The downloaded tarball is extracted.</p></li>
+<li><p><strong>Download/Compile 3D Morse</strong>:
+- For Windows: A precompiled executable is downloaded.
+- For non-Windows: The source code is downloaded, necessary modifications are made, and the source code is compiled.</p></li>
+</ol>
+</section>
+<section id="downloads">
+<h3>Downloads:<a class="headerlink" href="#downloads" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>MOPAC: <a class="reference external" href="https://github.com/openmopac/mopac/releases/download/v22.1.1/mopac-22.1.1-linux.tar.gz">https://github.com/openmopac/mopac/releases/download/v22.1.1/mopac-22.1.1-linux.tar.gz</a></p></li>
+<li><p>3D Morse executable (Windows): <a class="reference external" href="https://github.com/devinyak/3dmorse/blob/master/3dmorse.exe">https://github.com/devinyak/3dmorse/blob/master/3dmorse.exe</a></p></li>
+<li><p>3D Morse source code (non-Windows): <a class="reference external" href="https://raw.githubusercontent.com/devinyak/3dmorse/master/3dmorse.cpp">https://raw.githubusercontent.com/devinyak/3dmorse/master/3dmorse.cpp</a></p></li>
+<li><dl class="simple">
+<dt>Header files for compilation:</dt><dd><ul>
+<li><p>tchar.h: <a class="reference external" href="https://home.cs.colorado.edu/~main/cs1300-old/include/tchar.h">https://home.cs.colorado.edu/~main/cs1300-old/include/tchar.h</a></p></li>
+<li><p>_mingw.h: <a class="reference external" href="https://home.cs.colorado.edu/~main/cs1300-old/include/_mingw.h">https://home.cs.colorado.edu/~main/cs1300-old/include/_mingw.h</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="modifications">
+<h3>Modifications:<a class="headerlink" href="#modifications" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>The header file <cite>tchar.h</cite> is replaced with the downloaded version.</p></li>
+<li><p>The <cite>3dmorse.cpp</cite> file is modified to include the necessary headers for math functions.</p></li>
+</ul>
+</section>
+<section id="compilation">
+<h3>Compilation:<a class="headerlink" href="#compilation" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>The <cite>3dmorse.cpp</cite> file is compiled using <cite>g++</cite> for non-Windows systems.</p></li>
+</ul>
+</section>
+<section id="cleanup">
+<h3>Cleanup:<a class="headerlink" href="#cleanup" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Intermediate files used for compilation are deleted after the executable is created.</p></li>
+</ul>
+</section>
+<section id="prints">
+<h3>Prints:<a class="headerlink" href="#prints" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Status messages indicating the progress of each step.</p></li>
+</ul>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.quantum.descriptor_calculator">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.quantum.</span></span><span class="sig-name descname"><span class="pre">descriptor_calculator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'temp_data/mopfiles'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/quantum.html#descriptor_calculator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.quantum.descriptor_calculator" title="Link to this definition"></a></dt>
+<dd><p>Calculate molecular descriptors using MOPAC and Morse for a list of molecules.</p>
+<p>This function performs the following steps:
+1. Reads the input file containing molecule information.
+2. Generates MOPAC input files for each molecule.
+3. Runs MOPAC calculations to obtain quantum chemical descriptors.
+4. Runs 3D Morse calculations to obtain Morse descriptors.
+5. Writes the calculated descriptors to the output file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file</strong> (<em>str</em>) – Path to the input CSV file containing molecule information.
+The CSV file should have the following columns: ‘mol2_files’, ‘id’, ‘SMILES’.</p></li>
+<li><p><strong>output_file</strong> (<em>str</em>) – Path to the output CSV file where the descriptors will be written.</p></li>
+<li><p><strong>output_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory where MOPAC input and output files will be stored.
+Default is “temp_data/mopfiles”.</p></li>
+<li><p><strong>ncpu</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of CPU cores to use for MOPAC calculations.
+Default is the value of the <cite>cpu_to_use</cite> variable.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The input CSV file should have the following columns:
+- ‘mol2_files’: Path to the mol2 file for each molecule.
+- ‘id’: Unique identifier for each molecule.
+- ‘SMILES’: SMILES string representation of each molecule.</p>
+<p>The function creates MOPAC input files for each molecule and runs MOPAC calculations
+to obtain quantum chemical descriptors. It then runs 3D Morse calculations to obtain
+Morse descriptors. The calculated descriptors are written to the output CSV file.</p>
+</dd></dl>
+
+</section>
+<section id="module-ChemicalDice.chemberta">
+<span id="chemberta-module"></span><h2>chemberta module<a class="headerlink" href="#module-ChemicalDice.chemberta" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.chemberta.smiles_to_embeddings">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.chemberta.</span></span><span class="sig-name descname"><span class="pre">smiles_to_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/chemberta.html#smiles_to_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.chemberta.smiles_to_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Convert SMILES strings to ChemBERTa embeddings(A large language model) and save the results to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file</strong> (<em>str</em>) – The path to the input CSV file. The file should contain a column ‘Canonical_SMILES’ with SMILES strings and a column ‘id’ with unique identifiers.</p></li>
+<li><p><strong>output_file</strong> (<em>str</em>) – The path to the output CSV file where the calculated descriptor embeddings will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The function reads the input CSV file, extracts the SMILES strings and their corresponding identifiers, and then calls the Calculates ChemBERTa function to calculate the embeddings. The resulting embeddings are saved to the output CSV file.</p>
+</dd></dl>
+
+</section>
+<section id="module-ChemicalDice.ImageMol">
+<span id="imagemol-module"></span><h2>ImageMol module<a class="headerlink" href="#module-ChemicalDice.ImageMol" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.ImageMol.get_imagemol_prerequisites">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.ImageMol.</span></span><span class="sig-name descname"><span class="pre">get_imagemol_prerequisites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/ImageMol.html#get_imagemol_prerequisites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.ImageMol.get_imagemol_prerequisites" title="Link to this definition"></a></dt>
+<dd><p>Ensure that prerequisites for the ImageMol model are available in the specified directory.</p>
+<p>This function downloads the ImageMol model file (‘ImageMol.pth.tar’) from a GitHub repository
+and saves it in the specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Directory path where the ImageMol model file will be stored.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the downloaded ImageMol model file (‘ImageMol.pth.tar’).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.ImageMol.image_to_embeddings">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.ImageMol.</span></span><span class="sig-name descname"><span class="pre">image_to_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/ImageMol.html#image_to_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.ImageMol.image_to_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Convert images referenced in an input CSV file to embeddings using the ImageMol model and save them to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file</strong> (<em>str</em>) – Path to the input CSV file containing references to images.</p></li>
+<li><p><strong>output_file_name</strong> (<em>str</em>) – Path to the output CSV file where the embeddings will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function assumes the existence of pretrained models and required setup for ImageMol.
+It processes images from the input CSV file, extracts embeddings using a pretrained ResNet18 model,
+and saves the embeddings to the specified output CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the input CSV file (<cite>input_file</cite>) does not exist.</p></li>
+<li><p><strong>IOError</strong> – If there is an issue with reading the input CSV file or writing the output CSV file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ChemicalDice.Grover">
+<span id="grover-module"></span><h2>Grover module<a class="headerlink" href="#module-ChemicalDice.Grover" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.Grover.get_grover_prerequisites">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.Grover.</span></span><span class="sig-name descname"><span class="pre">get_grover_prerequisites</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/Grover.html#get_grover_prerequisites"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.Grover.get_grover_prerequisites" title="Link to this definition"></a></dt>
+<dd><p>Ensure that prerequisites for the Grover model are available in the specified directory.</p>
+<p>This function checks if the Grover model file (‘grover_large.pt’) exists in the given path. If not,
+it downloads the model from a URL, extracts it from a tar.gz file, and places it in the specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – Directory path where the Grover model and its prerequisites will be stored or are already located.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the Grover model file (‘grover_large.pt’) within the specified directory.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ChemicalDice.Grover.get_embeddings">
+<span class="sig-prename descclassname"><span class="pre">ChemicalDice.Grover.</span></span><span class="sig-name descname"><span class="pre">get_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'temp_data'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/Grover.html#get_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.Grover.get_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Generate molecular embeddings using the Grover model.</p>
+<p>This function prepares input data, runs Grover to generate molecular embeddings,
+and saves the embeddings to the specified output file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file</strong> (<em>str</em>) – Path to the input CSV file containing Canonical SMILES.</p></li>
+<li><p><strong>output_file_name</strong> (<em>str</em>) – Name of the file where the molecular embeddings will be saved.</p></li>
+<li><p><strong>output_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory where intermediate and output files will be stored (default is “temp_data”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ChemicalDice">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ChemicalDice" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="ChemicalDice" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Suvendu Kumar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

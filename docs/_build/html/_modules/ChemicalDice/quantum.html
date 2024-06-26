@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChemicalDice.quantum &mdash; ChemicalDice 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=7026087e"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            ChemicalDice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/methods/ImputationMethods.html">Imputation Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/methods/NormalizationMethods.html">Normalization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages/methods/FusionMethods.html">Fusion Methods</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Details of modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">ChemicalDice</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ChemicalDice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ChemicalDice.quantum</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ChemicalDice.quantum</h1><div class="highlight"><pre>
+<span></span>
+<span class="c1"># http://openmopac.net/mopac-22.0.6-win.exe</span>
+
+
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">openbabel</span> <span class="kn">import</span> <span class="n">pybel</span>
+<span class="kn">from</span> <span class="nn">rdkit</span> <span class="kn">import</span> <span class="n">Chem</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">openbabel</span> <span class="kn">import</span> <span class="n">openbabel</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">fileinput</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">import</span> <span class="nn">tarfile</span>
+
+
+
+<span class="kn">from</span> <span class="nn">ChemicalDice.quantum_need</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+
+
+
+<div class="viewcode-block" id="get_mopac_prerequisites">
+<a class="viewcode-back" href="../../ChemicalDice.html#ChemicalDice.quantum.get_mopac_prerequisites">[docs]</a>
+<span class="k">def</span> <span class="nf">get_mopac_prerequisites</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Download and set up the prerequisites for MOPAC and Morse.</span>
+
+<span class="sd">    This function performs the following steps:</span>
+<span class="sd">    1. Downloads the MOPAC tarball from a specified URL.</span>
+<span class="sd">    2. Extracts the contents of the downloaded tarball.</span>
+<span class="sd">    3. For Windows systems, downloads a precompiled version of 3D Morse.</span>
+<span class="sd">    4. For non-Windows systems, downloads the source code of 3D Morse, modifies it to be compatible with the system, and compiles it.</span>
+
+<span class="sd">    The function prints messages indicating the progress of the setup process.</span>
+
+<span class="sd">    Steps:</span>
+<span class="sd">    -------</span>
+<span class="sd">    1. **Download MOPAC**: The MOPAC software is downloaded from its official GitHub release page.</span>
+<span class="sd">    2. **Extract MOPAC**: The downloaded tarball is extracted.</span>
+<span class="sd">    3. **Download/Compile 3D Morse**:</span>
+<span class="sd">       - For Windows: A precompiled executable is downloaded.</span>
+<span class="sd">       - For non-Windows: The source code is downloaded, necessary modifications are made, and the source code is compiled.</span>
+
+<span class="sd">    Downloads:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - MOPAC: https://github.com/openmopac/mopac/releases/download/v22.1.1/mopac-22.1.1-linux.tar.gz</span>
+<span class="sd">    - 3D Morse executable (Windows): https://github.com/devinyak/3dmorse/blob/master/3dmorse.exe</span>
+<span class="sd">    - 3D Morse source code (non-Windows): https://raw.githubusercontent.com/devinyak/3dmorse/master/3dmorse.cpp</span>
+<span class="sd">    - Header files for compilation:</span>
+<span class="sd">        - tchar.h: https://home.cs.colorado.edu/~main/cs1300-old/include/tchar.h</span>
+<span class="sd">        - _mingw.h: https://home.cs.colorado.edu/~main/cs1300-old/include/_mingw.h</span>
+
+<span class="sd">    Modifications:</span>
+<span class="sd">    --------------</span>
+<span class="sd">    - The header file `tchar.h` is replaced with the downloaded version.</span>
+<span class="sd">    - The `3dmorse.cpp` file is modified to include the necessary headers for math functions.</span>
+
+<span class="sd">    Compilation:</span>
+<span class="sd">    ------------</span>
+<span class="sd">    - The `3dmorse.cpp` file is compiled using `g++` for non-Windows systems.</span>
+
+<span class="sd">    Cleanup:</span>
+<span class="sd">    --------</span>
+<span class="sd">    - Intermediate files used for compilation are deleted after the executable is created.</span>
+
+<span class="sd">    Prints:</span>
+<span class="sd">    -------</span>
+<span class="sd">    - Status messages indicating the progress of each step.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># URL of the file to be downloaded</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/openmopac/mopac/releases/download/v22.1.1/mopac-22.1.1-linux.tar.gz&quot;</span>
+
+    <span class="c1"># Name of the file to save as</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;mopac-22.1.1-linux.tar.gz&quot;</span>
+
+    <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+
+
+    <span class="c1"># Path to the tar.gz file</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;mopac-22.1.1-linux.tar.gz&quot;</span>
+
+    <span class="n">extract_tar_gz</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mopac is downloaded&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s2">&quot;https://github.com/devinyak/3dmorse/blob/master/3dmorse.exe&quot;</span><span class="p">,</span> <span class="s2">&quot;3dmorse.exe&quot;</span><span class="p">)</span>
+        <span class="c1"># compiling 3D morse</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/devinyak/3dmorse/master/3dmorse.cpp&quot;</span><span class="p">,</span> <span class="s2">&quot;3dmorse.cpp&quot;</span><span class="p">)</span>
+
+
+        <span class="k">with</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">FileInput</span><span class="p">(</span><span class="s2">&quot;3dmorse.cpp&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backup</span><span class="o">=</span><span class="s1">&#39;.bak&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;tchar.h&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;tchar.h&quot;&#39;</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="c1">#print(line.replace(&#39;//Some constants&#39;, &#39;#include &lt;math.h&gt;&#39;), end=&#39;&#39;)</span>
+        <span class="k">with</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">FileInput</span><span class="p">(</span><span class="s2">&quot;3dmorse.cpp&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backup</span><span class="o">=</span><span class="s1">&#39;.bak&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;//Some constants&#39;</span><span class="p">,</span> <span class="s1">&#39;#include &lt;math.h&gt;&#39;</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s2">&quot;https://home.cs.colorado.edu/~main/cs1300-old/include/tchar.h&quot;</span><span class="p">,</span> <span class="s2">&quot;tchar.h&quot;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">FileInput</span><span class="p">(</span><span class="s2">&quot;tchar.h&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backup</span><span class="o">=</span><span class="s1">&#39;.bak&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;_mingw.h&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&quot;_mingw.h&quot;&#39;</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s2">&quot;https://home.cs.colorado.edu/~main/cs1300-old/include/_mingw.h&quot;</span><span class="p">,</span> <span class="s2">&quot;_mingw.h&quot;</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;g++&#39;</span><span class="p">,</span> <span class="s1">&#39;3dmorse.cpp&#39;</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;3dmorse&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;3dmorse.cpp.bak&quot;</span><span class="p">,</span><span class="s2">&quot;_mingw.h&quot;</span><span class="p">,</span><span class="s2">&quot;tchar.h&quot;</span><span class="p">,</span><span class="s2">&quot;3dmorse.cpp&quot;</span><span class="p">,</span><span class="s2">&quot;tchar.h.bak&quot;</span><span class="p">]:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Morse is compiled&quot;</span><span class="p">)</span></div>
+
+
+
+
+
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="n">cpu_to_use</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.5</span>
+<span class="n">cpu_to_use</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cpu_to_use</span><span class="p">)</span>
+
+<div class="viewcode-block" id="descriptor_calculator">
+<a class="viewcode-back" href="../../ChemicalDice.html#ChemicalDice.quantum.descriptor_calculator">[docs]</a>
+<span class="k">def</span> <span class="nf">descriptor_calculator</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span><span class="n">output_file</span><span class="p">,</span> <span class="n">output_dir</span> <span class="o">=</span> <span class="s2">&quot;temp_data/mopfiles&quot;</span><span class="p">,</span><span class="n">ncpu</span><span class="o">=</span><span class="n">cpu_to_use</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Calculate molecular descriptors using MOPAC and Morse for a list of molecules.</span>
+
+<span class="sd">  This function performs the following steps:</span>
+<span class="sd">  1. Reads the input file containing molecule information.</span>
+<span class="sd">  2. Generates MOPAC input files for each molecule.</span>
+<span class="sd">  3. Runs MOPAC calculations to obtain quantum chemical descriptors.</span>
+<span class="sd">  4. Runs 3D Morse calculations to obtain Morse descriptors.</span>
+<span class="sd">  5. Writes the calculated descriptors to the output file.</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  input_file : str</span>
+<span class="sd">      Path to the input CSV file containing molecule information.</span>
+<span class="sd">      The CSV file should have the following columns: &#39;mol2_files&#39;, &#39;id&#39;, &#39;SMILES&#39;.</span>
+<span class="sd">  output_file : str</span>
+<span class="sd">      Path to the output CSV file where the descriptors will be written.</span>
+<span class="sd">  output_dir : str, optional</span>
+<span class="sd">      Directory where MOPAC input and output files will be stored.</span>
+<span class="sd">      Default is &quot;temp_data/mopfiles&quot;.</span>
+<span class="sd">  ncpu : int, optional</span>
+<span class="sd">      Number of CPU cores to use for MOPAC calculations.</span>
+<span class="sd">      Default is the value of the `cpu_to_use` variable.</span>
+
+<span class="sd">  Notes</span>
+<span class="sd">  -----</span>
+<span class="sd">  The input CSV file should have the following columns:</span>
+<span class="sd">  - &#39;mol2_files&#39;: Path to the mol2 file for each molecule.</span>
+<span class="sd">  - &#39;id&#39;: Unique identifier for each molecule.</span>
+<span class="sd">  - &#39;SMILES&#39;: SMILES string representation of each molecule.</span>
+
+<span class="sd">  The function creates MOPAC input files for each molecule and runs MOPAC calculations</span>
+<span class="sd">  to obtain quantum chemical descriptors. It then runs 3D Morse calculations to obtain</span>
+<span class="sd">  Morse descriptors. The calculated descriptors are written to the output CSV file.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">start_from</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+  <span class="n">n_threads</span> <span class="o">=</span> <span class="n">ncpu</span>
+  <span class="n">n</span><span class="o">=</span><span class="mi">0</span>
+  <span class="n">smiles_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_dir</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+  <span class="n">mol2file_name_list</span> <span class="o">=</span> <span class="n">smiles_df</span><span class="p">[</span><span class="s1">&#39;mol2_files&#39;</span><span class="p">]</span>
+  <span class="n">id_list</span> <span class="o">=</span> <span class="n">smiles_df</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+  <span class="n">smiles_list</span> <span class="o">=</span> <span class="n">smiles_df</span><span class="p">[</span><span class="s1">&#39;SMILES&#39;</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">start_from</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;id,SMILES,Hf,GN,GNPA,mu,NFL,IP,EHomo,ELumo,Mw,CoArea,CoVolume,ChemicalPotential,ChemicalHardness,ChemicalSoftness,Electrophilicity,fHL,EA,xmu,S,GAP,Mor01u,Mor02u,Mor03u,Mor04u,Mor05u,Mor06u,Mor07u,Mor08u,Mor09u,Mor10u,Mor11u,Mor12u,Mor13u,Mor14u,Mor15u,Mor16u,Mor17u,Mor18u,Mor19u,Mor20u,Mor21u,Mor22u,Mor23u,Mor24u,Mor25u,Mor26u,Mor27u,Mor28u,Mor29u,Mor30u,Mor31u,Mor32u,Mor01m,Mor02m,Mor03m,Mor04m,Mor05m,Mor06m,Mor07m,Mor08m,Mor09m,Mor10m,Mor11m,Mor12m,Mor13m,Mor14m,Mor15m,Mor16m,Mor17m,Mor18m,Mor19m,Mor20m,Mor21m,Mor22m,Mor23m,Mor24m,Mor25m,Mor26m,Mor27m,Mor28m,Mor29m,Mor30m,Mor31m,Mor32m,Mor01v,Mor02v,Mor03v,Mor04v,Mor05v,Mor06v,Mor07v,Mor08v,Mor09v,Mor10v,Mor11v,Mor12v,Mor13v,Mor14v,Mor15v,Mor16v,Mor17v,Mor18v,Mor19v,Mor20v,Mor21v,Mor22v,Mor23v,Mor24v,Mor25v,Mor26v,Mor27v,Mor28v,Mor29v,Mor30v,Mor31v,Mor32v,Mor01p,Mor02p,Mor03p,Mor04p,Mor05p,Mor06p,Mor07p,Mor08p,Mor09p,Mor10p,Mor11p,Mor12p,Mor13p,Mor14p,Mor15p,Mor16p,Mor17p,Mor18p,Mor19p,Mor20p,Mor21p,Mor22p,Mor23p,Mor24p,Mor25p,Mor26p,Mor27p,Mor28p,Mor29p,Mor30p,Mor31p,Mor32p,Mor01e,Mor02e,Mor03e,Mor04e,Mor05e,Mor06e,Mor07e,Mor08e,Mor09e,Mor10e,Mor11e,Mor12e,Mor13e,Mor14e,Mor15e,Mor16e,Mor17e,Mor18e,Mor19e,Mor20e,Mor21e,Mor22e,Mor23e,Mor24e,Mor25e,Mor26e,Mor27e,Mor28e,Mor29e,Mor30e,Mor31e,Mor32e,Mor01c,Mor02c,Mor03c,Mor04c,Mor05c,Mor06c,Mor07c,Mor08c,Mor09c,Mor10c,Mor11c,Mor12c,Mor13c,Mor14c,Mor15c,Mor16c,Mor17c,Mor18c,Mor19c,Mor20c,Mor21c,Mor22c,Mor23c,Mor24c,Mor25c,Mor26c,Mor27c,Mor28c,Mor29c,Mor30c,Mor31c,Mor32c&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span><span class="s2">&quot;a+&quot;</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">mol2file_name</span><span class="p">,</span><span class="nb">id</span><span class="p">,</span><span class="n">smile</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mol2file_name_list</span><span class="p">,</span> <span class="n">id_list</span><span class="p">,</span> <span class="n">smiles_list</span><span class="p">):</span>
+    <span class="c1"># print(&quot;=&quot;,end=&quot;&quot;)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">n</span><span class="o">+=</span><span class="mi">1</span>
+      <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">start_from</span><span class="p">:</span>
+          <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+          <span class="k">continue</span>
+      
+      <span class="c1">#mol2file_name = &quot;tempfiles/mol2files/smile&quot;+str(n)+&quot;.mol2&quot;</span>
+      <span class="c1">#m = Chem.MolFromMol2File(mol2file_name, sanitize=False, removeHs=False)</span>
+
+      <span class="c1"># calculating formal charge and spin multiplicity</span>
+      <span class="n">total_charge</span><span class="p">,</span><span class="n">spin_multi</span><span class="o">=</span> <span class="n">calculate_formalCharge_Multiplicity</span><span class="p">(</span><span class="n">mol2file_name</span><span class="p">,</span><span class="s2">&quot;mol2&quot;</span><span class="p">)</span>
+      <span class="n">spin_multi_dict</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="s2">&quot;SINGLET&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="s2">&quot;DOUBLET&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="s2">&quot;TRIPLET&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="s2">&quot;QUARTET&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="s2">&quot;QUINTET&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="s2">&quot;SEXTET&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span><span class="s2">&quot;SEPTET&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span><span class="s2">&quot;OCTET&quot;</span><span class="p">}</span>
+      <span class="n">spin_multi_name</span><span class="o">=</span><span class="n">spin_multi_dict</span><span class="p">[</span><span class="n">spin_multi</span><span class="p">]</span>
+
+      <span class="c1"># Read mo2 file</span>
+      <span class="k">for</span> <span class="n">mol</span> <span class="ow">in</span> <span class="n">pybel</span><span class="o">.</span><span class="n">readfile</span><span class="p">(</span><span class="s2">&quot;mol2&quot;</span><span class="p">,</span> <span class="n">mol2file_name</span><span class="p">):</span>
+          <span class="n">mymol</span> <span class="o">=</span> <span class="n">mol</span>
+
+      <span class="n">mopac_input</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="nb">id</span><span class="o">+</span><span class="s2">&quot;.mop&quot;</span><span class="p">)</span>
+
+      <span class="c1">#   if os.path.exists(mopac_input):</span>
+      <span class="c1">#       continue</span>
+      <span class="c1"># Making mopac input file for calculation type PM7</span>
+      <span class="n">calc_type</span><span class="o">=</span><span class="s2">&quot; PM7&quot;</span>
+
+      <span class="n">key_parameter</span><span class="o">=</span><span class="s2">&quot; AUX LARGE CHARGE=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">total_charge</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="n">spin_multi_name</span><span class="o">+</span><span class="n">calc_type</span><span class="o">+</span><span class="s2">&quot; THREADS=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_threads</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; OPT&quot;</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">+</span><span class="nb">id</span>
+      <span class="n">mymol</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;mopcrt&quot;</span><span class="p">,</span> <span class="n">mopac_input</span> <span class="p">,</span><span class="n">opt</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;k&quot;</span><span class="p">:</span><span class="n">key_parameter</span><span class="p">},</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+      <span class="n">mopac_output</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="nb">id</span><span class="o">+</span><span class="s2">&quot;.arc&quot;</span><span class="p">)</span>
+
+      <span class="n">mopac_executable</span> <span class="o">=</span> <span class="s1">&#39;mopac-22.1.1-linux/bin/mopac&#39;</span>
+
+      <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mopac_output</span><span class="p">):</span>
+        <span class="k">pass</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c1">#cmd = [&#39;mopac&#39;, mopac_input]</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="n">mopac_executable</span><span class="p">,</span> <span class="n">mopac_input</span><span class="p">])</span>
+        <span class="n">cpu_percent</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ncpu</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">cpulimit_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;cpulimit&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">pid</span><span class="p">),</span> <span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="n">cpu_percent</span><span class="p">])</span>
+        <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+        <span class="n">cpulimit_process</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+
+      <span class="c1"># running mopac using</span>
+      <span class="c1">#cmd = [&#39;mopac&#39;, mopac_input]</span>
+      <span class="c1">#p = subprocess.Popen(cmd, stdout=subprocess.PIPE)</span>
+      <span class="c1">#p.wait()</span>
+
+      <span class="n">mopac_output</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="nb">id</span><span class="o">+</span><span class="s2">&quot;.arc&quot;</span><span class="p">)</span>
+
+
+
+      <span class="c1"># reading descriptor data from file</span>
+      <span class="n">desc_data</span><span class="o">=</span><span class="n">CalculateBasicQC</span><span class="p">(</span><span class="n">ReadFile</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">mopac_output</span><span class="p">,</span> <span class="n">mol_name</span> <span class="o">=</span> <span class="nb">id</span><span class="p">,</span><span class="n">smile</span><span class="o">=</span><span class="n">smile</span><span class="p">))</span>
+
+      <span class="n">morse_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="nb">id</span><span class="o">+</span><span class="s2">&quot;.csv&quot;</span><span class="p">)</span>
+
+      <span class="n">mopac_output</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="nb">id</span><span class="o">+</span><span class="s2">&quot;.out&quot;</span><span class="p">)</span>
+
+      
+
+      <span class="c1"># calculate morse descriptors</span>
+      <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nt&quot;</span><span class="p">:</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;./3dmorse&#39;</span><span class="p">,</span><span class="n">mopac_output</span><span class="p">,</span> <span class="n">morse_file</span><span class="p">])</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s1">&#39;./3dmorse&#39;</span><span class="p">,</span><span class="n">mopac_output</span><span class="p">,</span> <span class="n">morse_file</span><span class="p">])</span>
+      <span class="n">morse_desc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">morse_file</span><span class="p">)</span>
+      <span class="n">morse_dict</span> <span class="o">=</span> <span class="n">morse_desc</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;records&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">desc_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">morse_dict</span><span class="p">)</span>
+
+      
+      <span class="n">row_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">desc_data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+      <span class="n">row_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row_list</span><span class="p">]</span>
+      <span class="n">row_str</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row_list</span><span class="p">)</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_str</span><span class="p">)</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="c1">#print(&quot;=&quot;,end=&quot;&quot;)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Error in descriptor calculation &quot;</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+      <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">()</span>
+  <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Suvendu Kumar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fusion Methods &mdash; ChemicalDice 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=7026087e"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="ChemicalDice" href="../../modules.html" />
+    <link rel="prev" title="Normalization Methods" href="NormalizationMethods.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            ChemicalDice
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ImputationMethods.html">Imputation Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="NormalizationMethods.html">Normalization Methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fusion Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#linear-methods">Linear methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#non-linear-methods">Non linear methods</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Details of modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">ChemicalDice</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ChemicalDice</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Fusion Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/pages/methods/FusionMethods.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fusion-methods">
+<h1>Fusion Methods<a class="headerlink" href="#fusion-methods" title="Link to this heading"></a></h1>
+<p>Fusion methods play a crucial role in data fusion, a process that
+integrates multiple data sources to produce more consistent,
+accurate, and useful information than that provided by any
+individual data source. These methods, which include various
+dimensionality reduction techniques and statistical models, help to
+uncover the underlying structure and relationships in the data,
+reduce noise and redundancy, and transform the data into a suitable
+form for further analysis or decision-making. By effectively
+combining data from different sources, fusion methods can enhance
+the quality and reliability of the resulting information, leading to
+improved insights and predictions. This is particularly important in
+fields such as machine learning, signal processing, and data mining,
+where the ability to extract meaningful information from large and
+complex datasets is key.</p>
+<section id="linear-methods">
+<h2>Linear methods<a class="headerlink" href="#linear-methods" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>PCA (Principal Component Analysis)</strong>: PCA is a linear
+dimensionality reduction technique that projects the data onto a
+lower-dimensional subspace that maximizes the variance. It does so by
+calculating the eigenvectors of the covariance matrix of the data,
+which correspond to the directions (or principal components) in which
+the data varies the most.</p></li>
+<li><p><strong>ICA (Independent Component Analysis)</strong>: ICA is a linear
+dimensionality reduction technique that separates the data into
+independent sources based on the assumption of statistical
+independence. It is often used in signal processing to separate mixed
+signals into their original sources.</p></li>
+<li><p><strong>IPCA (Incremental Principal Component Analysis)</strong>: IPCA is a
+variant of PCA that allows for online updates of the components
+without requiring access to the entire dataset. In traditional PCA,
+the entire dataset must be available and fit into memory, which might
+not be feasible with large datasets. IPCA, on the other hand, updates
+the components incrementally as new data comes in, without needing to
+access the entire dataset. This makes it a more memory-efficient
+alternative to PCA when dealing with large datasets. This makes it
+suitable for large datasets or streaming data.</p></li>
+<li><p><strong>CCA (Canonical Correlation Analysis)</strong>: CCA is a linear
+dimensionality reduction technique that finds the linear combinations
+of two sets of variables that are maximally correlated with each
+other. It is often used in multivariate data analysis to understand
+the relationships between two sets of variables.</p></li>
+</ol>
+</section>
+<section id="non-linear-methods">
+<h2>Non linear methods<a class="headerlink" href="#non-linear-methods" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>t-SNE (t-distributed Stochastic Neighbor Embedding)</strong>: t-SNE is a
+non-linear dimensionality reduction technique that preserves the
+local structure of the data by embedding it in a lower-dimensional
+space with a probability distribution that matches the pairwise
+distances in the original space.</p></li>
+<li><p><strong>KPCA (Kernel Principal Component Analysis)</strong>: KPCA is a non-linear
+extension of PCA that uses a kernel function to map the data into a
+higher-dimensional feature space where it is linearly separable. This
+allows KPCA to capture complex, non-linear relationships in the data.</p></li>
+<li><p><strong>RKS (Random Kitchen Sinks)</strong>: RKS is a non-linear dimensionality
+reduction technique that uses random projections to approximate a
+kernel function and map the data into a lower-dimensional feature
+space. It is often used in machine learning to speed up kernel
+methods.</p></li>
+<li><p><strong>SEM (Structural Equation Modeling)</strong>: SEM is a statistical
+technique that tests the causal relationships between multiple
+variables using a combination of regression and factor analysis. It
+is often used in social sciences to test theoretical models.</p></li>
+<li><p><strong>Isomap (Isometric Mapping)</strong>: Isomap is a non-linear dimensionality
+reduction technique that preserves the global structure of the data
+by embedding it in a lower-dimensional space with a geodesic distance
+that approximates the shortest path between points in the original
+space.</p></li>
+<li><p><strong>LLE (Locally Linear Embedding)</strong>: LLE is a non-linear
+dimensionality reduction technique that preserves the local structure
+of the data by reconstructing each point as a linear combination of
+its neighbors and embedding it in a lower-dimensional space that
+minimizes the reconstruction error.</p></li>
+<li><p><strong>Autoencoder</strong>: An autoencoder is a type of neural network that
+learns to encode the input data into a lower-dimensional latent
+representation and decode it back to the original data, minimizing
+the reconstruction error. It is often used in unsupervised learning
+for dimensionality reduction or feature extraction.</p></li>
+<li><p><strong>PLSDA (Partial Least Squares Discriminant Analysis)</strong>: PLSDA is a
+supervised dimensionality reduction technique that finds the linear
+combinations of the features that best explain both the variance and
+the correlation with the target variable. It is often used in
+chemometrics for classification or regression problems.</p></li>
+<li><p><strong>Tensor Decomposition</strong>: Tensor Decomposition is a technique that
+decomposes a multi-dimensional array (tensor) into a set of
+lower-dimensional arrays (factors) that capture the latent structure
+and interactions of the data. It is often used in machine learning to
+model high-dimensional data with complex interactions.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="NormalizationMethods.html" class="btn btn-neutral float-left" title="Normalization Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../modules.html" class="btn btn-neutral float-right" title="ChemicalDice" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Suvendu Kumar.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
