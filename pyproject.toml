@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ChemicalDice"
-version = "0.5.3"
+version = "0.5.5"
 readme = "Readme.rst"
 description = "ChemicalDice: Transforming cheminformatics and bioinformatics with advanced data fusion analysis."
 requires-python = ">=3.7"

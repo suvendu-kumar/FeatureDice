@@ -41,7 +41,7 @@ using the following command:
 
 .. code:: bash
 
-   pip install -i https://test.pypi.org/simple/ ChemicalDice==0.3.9
+   pip install -i https://test.pypi.org/simple/ ChemicalDice==0.5.5
    pip install torch==2.2.1 torchvision==0.17.1 torchaudio==2.2.1 --index-url https://download.pytorch.org/whl/rocm5.7
    pip install multitasking==0.0.11 pandas==2.0.3 scikit-learn==1.2.2 seaborn==0.13.1 tqdm==4.66.4 xgboost==2.0.3
    pip install rdkit==2023.9.6 signaturizer==1.1.14 descriptastorus==2.6.1 mordred==1.2.0 tensorly==0.8.1 transformers==4.40.1

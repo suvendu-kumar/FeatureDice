@@ -49,7 +49,15 @@
 <li class="toctree-l1"><a class="reference internal" href="Introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#calculation-of-descriptors">Calculation of descriptors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calculation-of-descriptors">Calculation of descriptors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantum-descriptors">Quantum descriptors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mordred-descriptors">Mordred Descriptors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chemberta-embeddings">ChemBERTa embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signaturizer-bioactivity-signatures">Signaturizer bioactivity Signatures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imagemol-embeddings">ImageMol embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grover-embeddings">Grover embeddings</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#reading-data">Reading Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-cleaning">Data Cleaning</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#common-samples">Common samples</a></li>
@@ -106,6 +114,7 @@
 <h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
 <section id="calculation-of-descriptors">
 <h2>Calculation of descriptors<a class="headerlink" href="#calculation-of-descriptors" title="Link to this heading"></a></h2>
+<p>All the descriptors can be using the following line of code</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a directory for storing descriptors filefrom ChemicalDice</span>
 <span class="kn">import</span> <span class="nn">smiles_preprocess</span><span class="o">,</span> <span class="nn">bioactivity</span><span class="o">,</span> <span class="nn">chemberta</span><span class="o">,</span> <span class="nn">Grover</span><span class="o">,</span> <span class="nn">ImageMol</span><span class="o">,</span> <span class="nn">chemical</span><span class="o">,</span> <span class="nn">quantum</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -127,6 +136,82 @@
 <span class="n">chemical</span><span class="o">.</span><span class="n">descriptor_calculator</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="s2">&quot;Chemicaldice_data/mordred.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<section id="quantum-descriptors">
+<h3>Quantum descriptors<a class="headerlink" href="#quantum-descriptors" title="Link to this heading"></a></h3>
+<p>To calculate quantum descriptors first we need to generate 3D structure
+of molecule. This will save mol2 file in a directory temp_data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smiles_preprocess</span><span class="o">.</span><span class="n">create_mol2_files</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For quantum descriptors calculation we need MOPAC(Molecular Orbital
+PACkage). The function <code class="docutils literal notranslate"><span class="pre">quantum.get_mopac_prerequisites</span></code> will download
+the mopac executable.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">quantum</span><span class="o">.</span><span class="n">get_mopac_prerequisites</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Create a directory where we can store our descriptors files.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we set for the calculation of quantum descriptors. The function
+<code class="docutils literal notranslate"><span class="pre">quantum.descriptor_calculator</span></code> takes two arguments input file path
+and output file path.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">quantum</span><span class="o">.</span><span class="n">descriptor_calculator</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="s2">&quot;data/mopac.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="mordred-descriptors">
+<h3>Mordred Descriptors<a class="headerlink" href="#mordred-descriptors" title="Link to this heading"></a></h3>
+<p>Mordred descriptors needs sdf files to calculate descriptors. The
+<code class="docutils literal notranslate"><span class="pre">smiles_preprocess</span></code> will create sdf file from mol2 files.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smiles_preprocess</span><span class="o">.</span><span class="n">create_sdf_files</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The function <code class="docutils literal notranslate"><span class="pre">chemical.descriptor_calculator</span></code> calculates modred
+descriptors.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">chemical</span><span class="o">.</span><span class="n">descriptor_calculator</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="s2">&quot;data/mordred.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="chemberta-embeddings">
+<h3>ChemBERTa embeddings<a class="headerlink" href="#chemberta-embeddings" title="Link to this heading"></a></h3>
+<p>The large language model ChemBERTa embeddings needs canonical SMILES,
+the function <code class="docutils literal notranslate"><span class="pre">smiles_preprocess.add_canonical_smiles</span></code> adds canonical
+smiles to input file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smiles_preprocess</span><span class="o">.</span><span class="n">add_canonical_smiles</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The function <code class="docutils literal notranslate"><span class="pre">chemberta.smiles_to_embeddings</span></code> generates embeddings
+from the canonical SMILES.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">chemberta</span><span class="o">.</span><span class="n">smiles_to_embeddings</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">,</span> <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;data/Chemberta.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="signaturizer-bioactivity-signatures">
+<h3>Signaturizer bioactivity Signatures<a class="headerlink" href="#signaturizer-bioactivity-signatures" title="Link to this heading"></a></h3>
+<p>The function <code class="docutils literal notranslate"><span class="pre">bioactivity.calculate_descriptors</span></code> generates bioactivity
+signatures from canonical SMILES.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bioactivity</span><span class="o">.</span><span class="n">calculate_descriptors</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">,</span> <span class="n">output_file</span> <span class="o">=</span> <span class="s2">&quot;data/Signaturizer.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="imagemol-embeddings">
+<h3>ImageMol embeddings<a class="headerlink" href="#imagemol-embeddings" title="Link to this heading"></a></h3>
+<p>The function <code class="docutils literal notranslate"><span class="pre">ImageMol.image_to_embeddings</span></code> function generates 2D
+images and then uses ImageMol model to gererate embeddings.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ImageMol</span><span class="o">.</span><span class="n">image_to_embeddings</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s2">&quot;data/ImageMol.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="grover-embeddings">
+<h3>Grover embeddings<a class="headerlink" href="#grover-embeddings" title="Link to this heading"></a></h3>
+<p>The function <code class="docutils literal notranslate"><span class="pre">Grover.get_embeddings</span></code> generates graph embeddings using
+canonical smiles.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Grover</span><span class="o">.</span><span class="n">get_embeddings</span><span class="p">(</span><span class="n">input_file</span> <span class="o">=</span> <span class="s2">&quot;freesolv.csv&quot;</span><span class="p">,</span>  <span class="n">output_file_name</span><span class="o">=</span><span class="s2">&quot;data/Grover.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="reading-data">
 <h2>Reading Data<a class="headerlink" href="#reading-data" title="Link to this heading"></a></h2>

@@ -86,16 +86,12 @@ def plot_models_boxplot(metrics_df, save_dir=None):
         plt.xticks(rotation=45, ha='right', rotation_mode='anchor')
         plt.tight_layout()
 
-        # Save or show the plot
-        if save_dir is not None:
-            # Create the directory if it does not exist
-            if not os.path.exists(save_dir):
-                os.makedirs(save_dir)
-            # Save the plot to the directory
-            plt.savefig(os.path.join(save_dir, f"metrics_{metric}.png"))
-        else:
-            # Show the plot
-            plt.show()
+
+        # Create the directory if it does not exist
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+        # Save the plot to the directory
+        plt.savefig(os.path.join(save_dir, f"metrics_{metric}.png"))
 
 
 
@@ -234,13 +230,9 @@ def plot_models_barplot(matrics,save_dir):
         plt.tight_layout()
         #plt.show()
         # Save or show the plot
-        if save_dir is not None:
-            # Create the directory if it does not exist
-            if not os.path.exists(save_dir):
-                os.makedirs(save_dir)
-            # Save the plot to the directory
-            plt.savefig(os.path.join(save_dir, f"metrics_{met}.png"))
-            plt.close()
-        else:
-            # Show the plot
-            plt.show()
+        # Create the directory if it does not exist
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+        # Save the plot to the directory
+        plt.savefig(os.path.join(save_dir, f"metrics_{met}.png"))
+        plt.close()

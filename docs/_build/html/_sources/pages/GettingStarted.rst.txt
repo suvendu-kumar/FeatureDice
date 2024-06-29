@@ -4,6 +4,8 @@ Getting started
 Calculation of descriptors
 --------------------------
 
+All the descriptors can be using the following line of code
+
 .. code:: python
 
    # create a directory for storing descriptors filefrom ChemicalDice 
@@ -25,6 +27,104 @@ Calculation of descriptors
    chemberta.smiles_to_embeddings(input_file, output_file = "Chemicaldice_data/Chemberta.csv")
    bioactivity.calculate_descriptors(input_file, output_file = "Chemicaldice_data/Signaturizer.csv")
    chemical.descriptor_calculator(input_file, output_file="Chemicaldice_data/mordred.csv")
+
+Quantum descriptors
+~~~~~~~~~~~~~~~~~~~
+
+To calculate quantum descriptors first we need to generate 3D structure
+of molecule. This will save mol2 file in a directory temp_data.
+
+.. code:: python
+
+   smiles_preprocess.create_mol2_files(input_file = "freesolv.csv")
+
+For quantum descriptors calculation we need MOPAC(Molecular Orbital
+PACkage). The function ``quantum.get_mopac_prerequisites`` will download
+the mopac executable.
+
+.. code:: python
+
+   quantum.get_mopac_prerequisites()
+
+Create a directory where we can store our descriptors files.
+
+.. code:: python
+
+   import os
+   os.mkdir("data")
+
+Now we set for the calculation of quantum descriptors. The function
+``quantum.descriptor_calculator`` takes two arguments input file path
+and output file path.
+
+.. code:: python
+
+   quantum.descriptor_calculator(input_file = "freesolv.csv", output_file="data/mopac.csv")
+
+Mordred Descriptors
+~~~~~~~~~~~~~~~~~~~
+
+Mordred descriptors needs sdf files to calculate descriptors. The
+``smiles_preprocess`` will create sdf file from mol2 files.
+
+.. code:: python
+
+   smiles_preprocess.create_sdf_files(input_file = "freesolv.csv")
+
+The function ``chemical.descriptor_calculator`` calculates modred
+descriptors.
+
+.. code:: python
+
+   chemical.descriptor_calculator(input_file = "freesolv.csv", output_file="data/mordred.csv")
+
+ChemBERTa embeddings
+~~~~~~~~~~~~~~~~~~~~
+
+The large language model ChemBERTa embeddings needs canonical SMILES,
+the function ``smiles_preprocess.add_canonical_smiles`` adds canonical
+smiles to input file.
+
+.. code:: python
+
+   smiles_preprocess.add_canonical_smiles(input_file = "freesolv.csv")
+
+The function ``chemberta.smiles_to_embeddings`` generates embeddings
+from the canonical SMILES.
+
+.. code:: python
+
+   chemberta.smiles_to_embeddings(input_file = "freesolv.csv", output_file = "data/Chemberta.csv")
+
+Signaturizer bioactivity Signatures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The function ``bioactivity.calculate_descriptors`` generates bioactivity
+signatures from canonical SMILES.
+
+.. code:: python
+
+   bioactivity.calculate_descriptors(input_file = "freesolv.csv", output_file = "data/Signaturizer.csv")
+
+ImageMol embeddings
+~~~~~~~~~~~~~~~~~~~
+
+The function ``ImageMol.image_to_embeddings`` function generates 2D
+images and then uses ImageMol model to gererate embeddings.
+
+.. code:: python
+
+   ImageMol.image_to_embeddings(input_file = "freesolv.csv", output_file_name="data/ImageMol.csv")
+
+Grover embeddings
+~~~~~~~~~~~~~~~~~
+
+The function ``Grover.get_embeddings`` generates graph embeddings using
+canonical smiles.
+
+.. code:: python
+
+   Grover.get_embeddings(input_file = "freesolv.csv",  output_file_name="data/Grover.csv")
 
 Reading Data
 ------------

@@ -102,7 +102,7 @@ import os
 import matplotlib.pyplot as plt
 from scipy import stats
 import pandas as pd
-from ChemicalDice.getEmbeddings import AutoencoderReconstructor_training , AutoencoderReconstructor_testing
+from ChemicalDice.getEmbeddings import AutoencoderReconstructor_training_other , AutoencoderReconstructor_testing, AutoencoderReconstructor_training_8192, AutoencoderReconstructor_training_single
 import time
 from ChemicalDice.splitting import random_scaffold_split_train_val_test, scaffold_split_balanced_train_val_test, scaffold_split_train_val_test
 
@@ -553,13 +553,8 @@ class fusionData:
                 fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+str(n_components)+".csv"))
 
             elif method in ['AER']:
+                scaler =StandardScaler()
                 if self.training_AER_model is None or self.AER_model_embt_size != AER_dim:
-                    # if AER_dim in [256, 512, 1024, 4096, 8192]:
-                    #     embd = AER_dim
-                    # else:
-                    #     embd = 4096
-                    embd = AER_dim
-                    
                     df_list2=[None,None,None,None,None,None]
                     for name, df in self.dataframes.items():
                         if name.lower() == "mopac":
@@ -574,72 +569,89 @@ class fusionData:
                             df_list2[4] = df.copy()
                         elif name.lower() ==  "grover":
                             df_list2[5] = df.copy()
-                    #print(df_list2)
-                    all_embeddings, model_state = AutoencoderReconstructor_training(df_list2[0], df_list2[1], df_list2[2], df_list2[3],df_list2[4],df_list2[5],embedding_sizes=embd)
-                    mopac_feature_wt = model_state['weights.0'].cpu().numpy()
-                    chemberta_feature_wt = model_state['weights.1'].cpu().numpy()
-                    mordred_feature_wt = model_state['weights.2'].cpu().numpy()
-                    signaturizer_feature_wt = model_state['weights.3'].cpu().numpy()
-                    imagemol_feature_wt = model_state['weights.4'].cpu().numpy()
-                    grover_feature_wt = model_state['weights.5'].cpu().numpy()
-                    explanibility = {}
+                    if type(AER_dim) == list:
+                        embd = 8192
+                        #print(df_list2)
+                        embeddings_8192 = AutoencoderReconstructor_training_8192(df_list2[0], df_list2[1], df_list2[2], df_list2[3],df_list2[4],df_list2[5])
+                        fused_df_unstandardized = embeddings_8192
+                        fused_df_unstandardized.set_index("id",inplace =True)
+                        fused_df1 = pd.DataFrame(scaler.fit_transform(fused_df_unstandardized), index=fused_df_unstandardized.index, columns=fused_df_unstandardized.columns)
+                        if 8192 in AER_dim:
+                            fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+str(embd)+".csv"))
+                            AER_dim.remove(8192)
+                        for embd in AER_dim:
+                            embeddings_df = AutoencoderReconstructor_training_other(df_list2[0], df_list2[1], df_list2[2], df_list2[3],df_list2[4],df_list2[5], embd)
+                            fused_df_unstandardized = embeddings_df
+                            fused_df_unstandardized.set_index("id",inplace =True)
+                            fused_df1 = pd.DataFrame(scaler.fit_transform(fused_df_unstandardized), index=fused_df_unstandardized.index, columns=fused_df_unstandardized.columns)
+                            fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+str(embd)+".csv"))
+                    elif type(AER_dim) == int:
+                        embeddings_df = AutoencoderReconstructor_training_single(df_list2[0], df_list2[1], df_list2[2], df_list2[3],df_list2[4],df_list2[5],AER_dim)
+                        fused_df_unstandardized = embeddings_df
+                        fused_df_unstandardized.set_index("id",inplace =True)
+                        fused_df1 = pd.DataFrame(scaler.fit_transform(fused_df_unstandardized), index=fused_df_unstandardized.index, columns=fused_df_unstandardized.columns)
+                        fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+str(embd)+".csv"))
+                    else:
+                        ValueError("AER_dim should be  int or list")
 
-                    for name, df in self.dataframes.items():
-                        if name.lower() == "mopac":
-                            column_name = df.columns
-                            explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':mopac_feature_wt})
-                        elif name.lower() == "chemberta":
-                            column_name = df.columns
-                            explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':chemberta_feature_wt})
-                        elif name.lower() ==  "mordred":
-                            column_name = df.columns
-                            explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':mordred_feature_wt})
-                        elif name.lower() ==  "signaturizer":
-                            column_name = df.columns
-                            explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':signaturizer_feature_wt})
-                        elif name.lower() ==  "imagemol":
-                            column_name = df.columns
-                            explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':imagemol_feature_wt})
-                        elif name.lower() ==  "grover":
-                            column_name = df.columns
-                            explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':grover_feature_wt})
-                    self.training_AER_model = model_state
-                    self.AER_model_embt_size = embd
-                    self.AER_model_explainability = explanibility
+                    # explanibility = {}
+                    # for name, df in self.dataframes.items():
+                    #     if name.lower() == "mopac":
+                    #         column_name = df.columns
+                    #         explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':model_wt[0]})
+                    #     elif name.lower() == "chemberta":
+                    #         column_name = df.columns
+                    #         explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':model_wt[1]})
+                    #     elif name.lower() ==  "mordred":
+                    #         column_name = df.columns
+                    #         explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':model_wt[2]})
+                    #     elif name.lower() ==  "signaturizer":
+                    #         column_name = df.columns
+                    #         explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':model_wt[3]})
+                    #     elif name.lower() ==  "imagemol":
+                    #         column_name = df.columns
+                    #         explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':model_wt[4]})
+                    #     elif name.lower() ==  "grover":
+                    #         column_name = df.columns
+                    #         explanibility['name'] = pd.DataFrame({'Feature':column_name,'weights':model_wt[5]})
+                    # self.training_AER_model = model_state
+                    # self.AER_model_embt_size = embd
+                    # self.AER_model_explainability = explanibility
                 else:
                     print("AER model Training")
-                embd = AER_dim
-                df_list2=[None,None,None,None,None,None]
-                for name, df in dataframe.items():
-                    if name.lower() == "mopac":
-                        df_list2[0] = df.copy()
-                    elif name.lower() == "chemberta":
-                        df_list2[1] = df.copy()
-                    elif name.lower() ==  "mordred":
-                        df_list2[2] = df.copy()
-                    elif name.lower() ==  "signaturizer":
-                        df_list2[3] = df.copy()
-                    elif name.lower() ==  "imagemol":
-                        df_list2[4] = df.copy()
-                    elif name.lower() ==  "grover":
-                        df_list2[5] = df.copy()
+                # embd = AER_dim
+                # df_list2=[None,None,None,None,None,None]
+                # for name, df in dataframe.items():
+                #     if name.lower() == "mopac":
+                #         df_list2[0] = df.copy()
+                #     elif name.lower() == "chemberta":
+                #         df_list2[1] = df.copy()
+                #     elif name.lower() ==  "mordred":
+                #         df_list2[2] = df.copy()
+                #     elif name.lower() ==  "signaturizer":
+                #         df_list2[3] = df.copy()
+                #     elif name.lower() ==  "imagemol":
+                #         df_list2[4] = df.copy()
+                #     elif name.lower() ==  "grover":
+                #         df_list2[5] = df.copy()
                 
-                model_state = self.training_AER_model
-                all_embeddings = AutoencoderReconstructor_testing(df_list2[0],df_list2[1],df_list2[2],df_list2[3],df_list2[4],df_list2[5],embedding_sizes=embd, model_state=model_state)
+                # model_state = self.training_AER_model
+                # all_embeddings = AutoencoderReconstructor_testing(df_list2[0],df_list2[1],df_list2[2],df_list2[3],df_list2[4],df_list2[5],embedding_sizes=embd, model_state=model_state)
                 
-                scaler = StandardScaler()
-                if len(all_embeddings) > 1:
-                    fused_df1 = []
-                    for i in range(len(all_embeddings)):
-                        fused_df_unstandardized = all_embeddings[i]
-                        fused_df_unstandardized.set_index("id",inplace =True)
-                        fused_df = pd.DataFrame(scaler.fit_transform(fused_df_unstandardized), index=fused_df_unstandardized.index, columns=fused_df_unstandardized.columns)
-                        fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+all_embeddings[i]+".csv"))
-                else:
-                    fused_df_unstandardized = all_embeddings[0]
-                    fused_df_unstandardized.set_index("id",inplace =True)
-                    fused_df1 = pd.DataFrame(scaler.fit_transform(fused_df_unstandardized), index=fused_df_unstandardized.index, columns=fused_df_unstandardized.columns)
-                    fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+all_embeddings[0]+".csv"))
+                # scaler = StandardScaler()
+                # if len(all_embeddings) > 1:
+                #     fused_df1 = []
+                #     for i in range(len(all_embeddings)):
+                #         fused_df_unstandardized = all_embeddings[i]
+                #         fused_df_unstandardized.set_index("id",inplace =True)
+                #         fused_df = pd.DataFrame(scaler.fit_transform(fused_df_unstandardized), index=fused_df_unstandardized.index, columns=fused_df_unstandardized.columns)
+                #         fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+all_embeddings[i]+".csv"))
+                # else:
+                #     fused_df_unstandardized = all_embeddings[0]
+                #     fused_df_unstandardized.set_index("id",inplace =True)
+                #     fused_df1 = pd.DataFrame(scaler.fit_transform(fused_df_unstandardized), index=fused_df_unstandardized.index, columns=fused_df_unstandardized.columns)
+                #     fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+all_embeddings[0]+".csv"))
+                    
             prediction_label = self.prediction_label
             if method in ['plsda']:
                 df_list = []
@@ -679,194 +691,8 @@ class fusionData:
                 fused_df1.to_csv(os.path.join(save_dir,"fused_data_"+method+"_"+str(n_components)+".csv"))
             print("Data is fused and saved to  ChemicalDice_fusedData")
 
-    def evaluate_fusion_models(self, n_components=10, methods=['cca', 'pca'], regression=False, AER_dim =4096):
-        """
-        Evaluate different fusion models on the dataframes and prediction labels. 
 
-        The fusion methods are as follows: 
-
-        - 'AER': Autoencoder Reconstruction Analysis
-        - 'pca': Principal Component Analysis
-        - 'ica': Independent Component Analysis
-        - 'ipca': Incremental Principal Component Analysis
-        - 'cca': Canonical Correlation Analysis
-        - 'tsne': t-distributed Stochastic Neighbor Embedding
-        - 'kpca': Kernel Principal Component Analysis
-        - 'rks': Random Kitchen Sinks
-        - 'SEM': Structural Equation Modeling
-        - 'autoencoder': Autoencoder
-        - 'tensordecompose': Tensor Decomposition
-        - 'plsda': Partial Least Squares Discriminant Analysis 
-
-        :param n_components: The number of components use for the fusion. The default is 10.
-        :type n_components: int
-        :param n_folds: The number of folds to use for cross-validation. The default is 10.
-        :type n_folds: int
-        :param methods: A list of fusion methods to apply. The default is ['cca', 'pca'].
-        :type methods: list
-        :param regression: If want to create a regression model. The default is False.
-        :type regression: bool
-
-        :raises: ValueError if any of the methods are invalid.
-
-        """
-
-
-        dataframes = self.dataframes
-        prediction_labels = self.prediction_label
-        self.train_dataframes, self.test_dataframes, self.train_label, self.test_label  = save_train_test_data(dataframes, prediction_labels, output_dir="comaprision_data")
-        methods_chemdices = ['pca', 'ica', 'ipca', 'cca', 'tsne', 'kpca', 'rks', 'SEM', 'autoencoder', 'tensordecompose', 'plsda',"AER"]
-        valid_methods_chemdices = [method for method in methods if method in methods_chemdices]
-        invalid_methods_chemdices = [method for method in methods if method not in methods_chemdices]
-
-        
-
-        if len(invalid_methods_chemdices):
-            methods_chemdices_text = ",".join(methods_chemdices)
-            invalid_methods_chemdices_text = ",".join(invalid_methods_chemdices)
-            ValueError(f"These methods are invalid:{invalid_methods_chemdices_text}\nValid methods are : {methods_chemdices_text}")
-
-
-        if regression == False:
-            # Define a classification of models
-            models = [
-                ("Logistic Regression", LogisticRegression()),
-                ("Decision Tree", DecisionTreeClassifier()),
-                ("Random Forest", RandomForestClassifier()),
-                ("Support Vector Machine", SVC(probability=True)),
-                ("Naive Bayes", GaussianNB())
-            ]
-            # Initialize a dictionary to store the metrics
-            metrics = {
-                "Model type": [],
-                "Model": [],
-                "AUC": [],
-                "Accuracy": [],
-                "Precision": [],
-                "Recall": [],
-                "f1 score":[],
-                "Balanced accuracy":[],
-                "MCC":[],
-                "Kappa":[]
-            }
-
-
-
-            for method_chemdice in valid_methods_chemdices:
-                # Fuse all data in dataframes
-                print("Method name",method_chemdice)
-                self.fuseFeaturesTrain(n_components = n_components,  method=method_chemdice, AER_dim=AER_dim)
-                X_train = self.fusedData_train
-                y_train = self.train_label
-                self.fuseFeaturesTest(n_components = n_components,  method=method_chemdice, AER_dim=AER_dim)
-                X_test = self.fusedData_test
-                y_test = self.test_label
-
-                # Loop through the models and evaluate them
-                for name, model in models:
-                    if method_chemdice in ['pca', 'ica', 'ipca', 'cca', 'plsda']:
-                        metrics["Model type"].append("linear")
-                    else:
-                        metrics["Model type"].append("Non-linear")
-                    name = method_chemdice+" "+ name 
-                    # Fit the model on the train set
-                    model.fit(X_train, y_train)
-                    # Predict the probabilities on the test set
-                    y_pred_proba = model.predict_proba(X_test)[:, 1]
-                    # Compute the metrics
-                    auc = roc_auc_score(y_test, y_pred_proba)
-                    accuracy = accuracy_score(y_test, y_pred_proba > 0.5)
-                    precision = precision_score(y_test, y_pred_proba > 0.5)
-                    recall = recall_score(y_test, y_pred_proba > 0.5)
-                    f1 = f1_score(y_test, y_pred_proba > 0.5)
-                    baccuracy = balanced_accuracy_score(y_test, y_pred_proba > 0.5)
-                    mcc = matthews_corrcoef(y_test, y_pred_proba > 0.5)
-                    kappa = cohen_kappa_score(y_test, y_pred_proba > 0.5)
-                    # Append the metrics to the dictionary
-                    metrics["Model"].append(name)
-                    metrics["AUC"].append(auc)
-                    metrics["Accuracy"].append(accuracy)
-                    metrics["Precision"].append(precision)
-                    metrics["Recall"].append(recall)
-                    metrics["f1 score"].append(f1)
-                    metrics["Balanced accuracy"].append(baccuracy)
-                    metrics["MCC"].append(mcc)
-                    metrics["Kappa"].append(kappa)
-            # Convert the dictionary to a dataframe
-            metrics_df = pd.DataFrame(metrics)
-            metrics_df = metrics_df.sort_values(by = "AUC", ascending=False)
-            self.Accuracy_metrics = metrics_df
-            
-        else:
-            # Define a list of regression models
-            models = [
-                ("Linear Regression", LinearRegression()),
-                ("Ridge", Ridge()),
-                ("Lasso", Lasso()),
-                ("ElasticNet", ElasticNet()),
-                ("Decision Tree", DecisionTreeRegressor()),
-                ("Random Forest", RandomForestRegressor()),
-                ("Gradient Boosting", GradientBoostingRegressor()),
-                ("AdaBoost", AdaBoostRegressor()),
-                ("Support Vector Machine", SVR()),
-                ("K Neighbors", KNeighborsRegressor()),
-                ("MLP", MLPRegressor()),
-                ("Gaussian Process", GaussianProcessRegressor()),
-                ("Kernel Ridge", KernelRidge())
-            ]
-
-            # Initialize a dictionary to store the metrics
-            metrics = {
-                "Model type": [],
-                "Model": [],
-                "R2 Score": [],
-                "MSE": [],
-                "RMSE":[],
-                "MAE":[]
-            }
-            #methods_chemdices = ['pca', 'ica', 'ipca', 'cca', 'tsne', 'kpca', 'rks', 'SEM', 'autoencoder', 'tensordecompose', 'plsda']
-
-            for method_chemdice in valid_methods_chemdices:
-                # Fuse all data in dataframes
-                print("Method name", method_chemdice)
-                self.fuseFeaturesTrain(n_components=n_components, method=method_chemdice,AER_dim=AER_dim)
-                X_train = self.fusedData_train
-                y_train = self.train_label
-                self.fuseFeaturesTest(n_components=n_components, method=method_chemdice,AER_dim=AER_dim)
-                X_test = self.fusedData_test
-                y_test = self.test_label
-
-                # Loop through the models and evaluate them
-                for name, model in models:
-                    if method_chemdice in ['pca', 'ica', 'ipca', 'cca', 'plsda']:
-                        metrics["Model type"].append("linear")
-                    else:
-                        metrics["Model type"].append("Non-linear")
-                    name = method_chemdice + " " + name
-                    # Fit the model on the train set
-                    model.fit(X_train, y_train)
-                    # Predict on the test set
-                    y_pred = model.predict(X_test)
-                    # Compute the metrics
-                    mse = mean_squared_error(y_test, y_pred)
-                    r2 = r2_score(y_test, y_pred)
-                    mae = mean_absolute_error(y_test, y_pred)
-                    rmse = np.sqrt(mse)
-                    # Append the metrics to the dictionary
-                    metrics["Model"].append(name)
-                    metrics["MSE"].append(mse)
-                    metrics["RMSE"].append(rmse)
-                    metrics["MAE"].append(mae)
-                    metrics["R2 Score"].append(r2)
-
-            # Convert the dictionary to a dataframe
-            metrics_df = pd.DataFrame(metrics)
-            metrics_df = metrics_df.sort_values(by="R2 Score", ascending=False)
-            self.Accuracy_metrics = metrics_df
-
-
-
-    def evaluate_fusion_models_nfold(self, folds, task_type, fused_data_path="ChemicalDice_fusedData"):
+    def evaluate_fusion_models_nfold(self, folds, task_type, fused_data_path="ChemicalDice_fusedData", models = None):
         """
         Perform n-fold cross-validation on fusion models and save the evaluation metrics.This method evaluates the performance of various machine learning models on fused data obtained from ChemDice. It supports both classification and regression tasks and saves the performance metrics for each fold into a CSV file.
         :param folds: The number of folds to use for KFold cross-validation.
@@ -875,11 +701,45 @@ class fusionData:
         :type task_type: str
         :param fused_data_path: The path to the directory containing the fused data files, defaults to 'ChemicalDice_fusedData'.
         :type fused_data_path: str
+        :param models: The list of model names to evaluate. If None, a default set of models will be used.
+        :type models: list[str], optional
         :raises ValueError: If the `task_type` is neither 'classification' nor 'regression'.
         :return: None
-        .. note:: The method assumes that the prediction labels are stored in `self.prediction_label`.For classification, it evaluates models based on AUC, accuracy, precision, recall, f1 score, balanced accuracy, MCC, and kappa. For regression, it evaluates models based on R2 score, MSE, RMSE, and MAE. The results are saved in a CSV file named 'Accuracy_Metrics_{method_chemdice}.csv' in a directory named '{folds}_fold_CV_results'.
+
+        Available Models for
+        Classification:
+            - "Logistic Regression"
+            - "Decision Tree"
+            - "Random Forest"
+            - "Support Vector Machine"
+            - "Naive Bayes"
+            - "KNN"
+            - "NeuralNet"
+            - "QDA"
+            - "AdaBoost"
+            - "Extra Trees"
+            - "XGBoost"
+
+        Available Models for
+        Regression:
+            - "Linear Regression"
+            - "Ridge"
+            - "Lasso"
+            - "ElasticNet"
+            - "Decision Tree"
+            - "Random Forest"
+            - "Gradient Boosting"
+            - "AdaBoost"
+            - "Support Vector Machine"
+            - "K Neighbors"
+            - "MLP"
+            - "Gaussian Process"
+            - "Kernel Ridge"
+
+        .. note:: The method assumes that the prediction labels are stored in `self.prediction_label`.For classification, it evaluates models based on AUC, accuracy, precision, recall, f1 score, balanced accuracy, MCC, and kappa. For regression, it evaluates models based on R2 score, MSE, RMSE, and MAE. The results are saved in a CSV file named 'Accuracy_Metrics_{method_name}.csv' in a directory named '{folds}_fold_CV_results'.
 
         """
+        
         list_of_files = os.listdir(fused_data_path)
         self.task_type = task_type
         self.folds = folds
@@ -893,13 +753,35 @@ class fusionData:
             kf = KFold(n_splits=folds, shuffle=True, random_state=42)
 
             if task_type == "classification":
-                models = [
-                    ("Logistic Regression", LogisticRegression()),
-                    ("Decision Tree", DecisionTreeClassifier()),
-                    ("Random Forest", RandomForestClassifier()),
-                    ("Support Vector Machine", SVC(probability=True)),
-                    ("Naive Bayes", GaussianNB())
-                ]
+                if models == None:
+                    models = [
+                        ("Logistic Regression", LogisticRegression()),
+                        ("Decision Tree", DecisionTreeClassifier()),
+                        ("Random Forest", RandomForestClassifier()),
+                        ("Support Vector Machine", SVC(probability=True)),
+                        ("Naive Bayes", GaussianNB()),
+                        ("KNN", KNeighborsClassifier(leaf_size=1, n_neighbors=11, p=3, weights='distance')),
+                        ("NeuralNet", MLPClassifier(alpha=1, max_iter=1000)),
+                        ("QDA", QuadraticDiscriminantAnalysis()),
+                        ("AdaBoost", AdaBoostClassifier()),
+                        ("Extra Trees", ExtraTreesClassifier()),
+                        ("XGBoost", XGBClassifier(use_label_encoder=False, eval_metric='logloss'))
+                    ]
+                else:
+                    classifiers = [
+                        ("Logistic Regression", LogisticRegression()),
+                        ("Decision Tree", DecisionTreeClassifier()),
+                        ("Random Forest", RandomForestClassifier()),
+                        ("Support Vector Machine", SVC(probability=True)),
+                        ("Naive Bayes", GaussianNB()),
+                        ("KNN", KNeighborsClassifier(leaf_size=1, n_neighbors=11, p=3, weights='distance')),
+                        ("NeuralNet", MLPClassifier(alpha=1, max_iter=1000)),
+                        ("QDA", QuadraticDiscriminantAnalysis()),
+                        ("AdaBoost", AdaBoostClassifier()),
+                        ("Extra Trees", ExtraTreesClassifier()),
+                        ("XGBoost", XGBClassifier(use_label_encoder=False, eval_metric='logloss'))
+                    ]
+                    models = [clf for clf in classifiers if clf[0] in models]
 
                 metrics = {
                     "Model type": [],
@@ -915,21 +797,40 @@ class fusionData:
                     "Kappa": []
                 }
             elif task_type == "regression":
-                models = [
-                    ("Linear Regression", LinearRegression()),
-                    ("Ridge", Ridge()),
-                    ("Lasso", Lasso()),
-                    ("ElasticNet", ElasticNet()),
-                    ("Decision Tree", DecisionTreeRegressor()),
-                    ("Random Forest", RandomForestRegressor()),
-                    ("Gradient Boosting", GradientBoostingRegressor()),
-                    ("AdaBoost", AdaBoostRegressor()),
-                    ("Support Vector Machine", SVR()),
-                    ("K Neighbors", KNeighborsRegressor()),
-                    ("MLP", MLPRegressor()),
-                    ("Gaussian Process", GaussianProcessRegressor()),
-                    ("Kernel Ridge", KernelRidge())
-                ]
+                if models == None:
+                    models = [
+                        ("Linear Regression", LinearRegression()),
+                        ("Ridge", Ridge()),
+                        ("Lasso", Lasso()),
+                        ("ElasticNet", ElasticNet()),
+                        ("Decision Tree", DecisionTreeRegressor()),
+                        ("Random Forest", RandomForestRegressor()),
+                        ("Gradient Boosting", GradientBoostingRegressor()),
+                        ("AdaBoost", AdaBoostRegressor()),
+                        ("Support Vector Machine", SVR()),
+                        ("K Neighbors", KNeighborsRegressor()),
+                        ("MLP", MLPRegressor()),
+                        ("Gaussian Process", GaussianProcessRegressor()),
+                        ("Kernel Ridge", KernelRidge())
+                    ]
+                else:
+                    regressors = [
+                        ("Linear Regression", LinearRegression()),
+                        ("Ridge", Ridge()),
+                        ("Lasso", Lasso()),
+                        ("ElasticNet", ElasticNet()),
+                        ("Decision Tree", DecisionTreeRegressor()),
+                        ("Random Forest", RandomForestRegressor()),
+                        ("Gradient Boosting", GradientBoostingRegressor()),
+                        ("AdaBoost", AdaBoostRegressor()),
+                        ("Support Vector Machine", SVR()),
+                        ("K Neighbors", KNeighborsRegressor()),
+                        ("MLP", MLPRegressor()),
+                        ("Gaussian Process", GaussianProcessRegressor()),
+                        ("Kernel Ridge", KernelRidge())
+                    ]
+
+                    models = [regg for regg in regressors if regg[0] in models]
 
                 metrics = {
                     "Model type": [],
@@ -1040,7 +941,7 @@ class fusionData:
 
     
 
-    def evaluate_fusion_models_scaffold_split(self, split_type, task_type, fused_data_path="ChemicalDice_fusedData"):
+    def evaluate_fusion_models_scaffold_split(self, split_type, task_type, fused_data_path="ChemicalDice_fusedData",models=None):
         """
         Perform n-fold cross-validation on fusion models and save the evaluation metrics. This method evaluates the performance of various machine learning models on fused data obtained from ChemDice. It supports both classification and regression tasks and saves the performance metrics for each fold into a CSV file.
         
@@ -1050,8 +951,41 @@ class fusionData:
         :type task_type: str
         :param fused_data_path: The path to the directory containing the fused data files, defaults to 'ChemicalDice_fusedData'.
         :type fused_data_path: str
+        :param models: The list of model names to evaluate. If None, a default set of models will be used.
+        :type models: list[str], optional
         :raises ValueError: If the `task_type` is neither 'classification' nor 'regression'.
         :return: None
+
+        Available Models for
+        Classification:
+            - "Logistic Regression"
+            - "Decision Tree"
+            - "Random Forest"
+            - "Support Vector Machine"
+            - "Naive Bayes"
+            - "KNN"
+            - "NeuralNet"
+            - "QDA"
+            - "AdaBoost"
+            - "Extra Trees"
+            - "XGBoost"
+
+        Available Models for
+        Regression:
+            - "Linear Regression"
+            - "Ridge"
+            - "Lasso"
+            - "ElasticNet"
+            - "Decision Tree"
+            - "Random Forest"
+            - "Gradient Boosting"
+            - "AdaBoost"
+            - "Support Vector Machine"
+            - "K Neighbors"
+            - "MLP"
+            - "Gaussian Process"
+            - "Kernel Ridge"
+            
         .. note:: The method assumes that the prediction labels are stored in `self.prediction_label`. For classification, it evaluates models based on AUC, accuracy, precision, recall, f1 score, balanced accuracy, MCC, and kappa. For regression, it evaluates models based on R2 score, MSE, RMSE, and MAE. The results are saved in a CSV file named 'Accuracy_Metrics_{method_chemdice}.csv' in a directory named 'scaffold_split_results'.
 
 
@@ -1176,7 +1110,7 @@ class fusionData:
                 X_train, X_test, X_val = X.loc[train_index], X.loc[test_index], X.loc[val_index]
                 y_train, y_test, y_val = y[train_index], y[test_index], y[val_index]
             if task_type == "classification":
-                models = [
+                classifiers = [
                     ("Logistic Regression", LogisticRegression(), {
                         'C': [0.01, 0.1, 1, 10, 100],
                         'penalty': ['l1', 'l2', 'elasticnet', 'none'],
@@ -1233,9 +1167,13 @@ class fusionData:
                         'colsample_bytree': [0.5, 0.7, 1.0]
                     })
                 ]
+                if models ==None:
+                    models = classifiers
+                else:
+                    models = [clf for clf in classifiers if clf[0] in models]
             # Define models and their respective parameter grids
             elif task_type == "regression":
-                models = [
+                regressors = [
                     ("MLP", MLPRegressor(), {'hidden_layer_sizes': [(50,), (100,), (50, 50)], 'activation': ['relu', 'tanh'], 'alpha': [0.0001, 0.001, 0.01]}),
                     ("Kernel Ridge", KernelRidge(), {'alpha': [0.1, 1.0, 10.0], 'kernel': ['linear', 'rbf', 'poly'], 'gamma': [0.1, 1.0, 10.0]}),
                     ("Linear Regression", LinearRegression(), {'fit_intercept': [True, False]}),
@@ -1250,6 +1188,10 @@ class fusionData:
                     ("K Neighbors", KNeighborsRegressor(), {'n_neighbors': [3, 5, 10], 'weights': ['uniform', 'distance']}),
                     ("Gaussian Process", GaussianProcessRegressor(), {'alpha': [1e-10, 1e-9, 1e-8],'kernel': [RBF(), Matern()] })
                 ]
+            if models==None:
+                models = regressors
+            else:
+                models = [regg for regg in regressors if regg[0] in models]
 
             parameters_dict = {model_name: [] for model_name, _, _ in models}
             best_parameters_dict = {}
@@ -1330,33 +1272,9 @@ class fusionData:
                 print("Best parameters of: " , model_name)
                 print(best_parameters_dict[model_name])
 
-            if task_type== "regression":
-                models = [
-                    ("MLP", MLPRegressor(**best_parameters_dict['MLP'])),
-                    ("Gaussian Process", GaussianProcessRegressor(**best_parameters_dict['Gaussian Process'])),
-                    ("Kernel Ridge", KernelRidge(**best_parameters_dict['Kernel Ridge'])),
-                    ("Linear Regression", LinearRegression(**best_parameters_dict['Linear Regression'])),
-                    ("Ridge", Ridge(**best_parameters_dict['Ridge'])),
-                    ("Lasso", Lasso(**best_parameters_dict['Lasso']),),
-                    ("ElasticNet", ElasticNet(**best_parameters_dict['ElasticNet'])),
-                    ("Decision Tree", DecisionTreeRegressor(**best_parameters_dict['Decision Tree'])),
-                    ("Gradient Boosting", GradientBoostingRegressor(**best_parameters_dict['Gradient Boosting'])),
-                    ("AdaBoost", AdaBoostRegressor(**best_parameters_dict['AdaBoost'])),
-                    ("Support Vector Machine", SVR(**best_parameters_dict['Support Vector Machine'])),
-                    ("K Neighbors", KNeighborsRegressor(**best_parameters_dict["K Neighbors"])),
-                ]
-            elif task_type=="classification":
-                models = [
-                    ("RandomForestClassifier", RandomForestClassifier(**best_parameters_dict['RandomForestClassifier'])), # lowest FN
-                    ("XGBClassifier", XGBClassifier(** best_parameters_dict['XGBClassifier'])),
-                    ("ExtraTreesClassifier", ExtraTreesClassifier(**best_parameters_dict['ExtraTreesClassifier'])),
-                    ("QuadraticDiscriminantAnalysis", QuadraticDiscriminantAnalysis(**best_parameters_dict['QuadraticDiscriminantAnalysis'])) , # too many FN
-                    ("MLPClassifier", MLPClassifier(**best_parameters_dict['MLPClassifier'])),
-                    ("SVC", SVC(**best_parameters_dict['SVC'])),
-                ]
-
-            
-            for name, model in models:
+            print("Testing with best parameters")
+            for name, model,_ in models:
+                best_parameter = best_parameters_dict[name]
                 
                 if method_chemdice.startswith(('pca', 'ica', 'ipca', 'cca', 'plsda')):
                     train_metrics["Model type"].append("linear")
@@ -1372,6 +1290,9 @@ class fusionData:
 
                 name = method_chemdice+"_"+name
                 print("**************************   "+name + "    **************************")
+                
+                print(best_parameter)
+                model.set_params(**best_parameter)
                 model.fit(X_train, y_train)
 
 

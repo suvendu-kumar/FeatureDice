@@ -369,42 +369,8 @@ Defaults to “labels”.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.evaluate_fusion_models">
-<span class="sig-name descname"><span class="pre">evaluate_fusion_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['cca',</span> <span class="pre">'pca']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">AER_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4096</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.evaluate_fusion_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.evaluate_fusion_models" title="Link to this definition"></a></dt>
-<dd><p>Evaluate different fusion models on the dataframes and prediction labels.</p>
-<p>The fusion methods are as follows:</p>
-<ul class="simple">
-<li><p>‘AER’: Autoencoder Reconstruction Analysis</p></li>
-<li><p>‘pca’: Principal Component Analysis</p></li>
-<li><p>‘ica’: Independent Component Analysis</p></li>
-<li><p>‘ipca’: Incremental Principal Component Analysis</p></li>
-<li><p>‘cca’: Canonical Correlation Analysis</p></li>
-<li><p>‘tsne’: t-distributed Stochastic Neighbor Embedding</p></li>
-<li><p>‘kpca’: Kernel Principal Component Analysis</p></li>
-<li><p>‘rks’: Random Kitchen Sinks</p></li>
-<li><p>‘SEM’: Structural Equation Modeling</p></li>
-<li><p>‘autoencoder’: Autoencoder</p></li>
-<li><p>‘tensordecompose’: Tensor Decomposition</p></li>
-<li><p>‘plsda’: Partial Least Squares Discriminant Analysis</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>n_components</strong> (<em>int</em>) – The number of components use for the fusion. The default is 10.</p></li>
-<li><p><strong>n_folds</strong> (<em>int</em>) – The number of folds to use for cross-validation. The default is 10.</p></li>
-<li><p><strong>methods</strong> (<em>list</em>) – A list of fusion methods to apply. The default is [‘cca’, ‘pca’].</p></li>
-<li><p><strong>regression</strong> (<em>bool</em>) – If want to create a regression model. The default is False.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p>ValueError if any of the methods are invalid.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.evaluate_fusion_models_nfold">
-<span class="sig-name descname"><span class="pre">evaluate_fusion_models_nfold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fused_data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ChemicalDice_fusedData'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.evaluate_fusion_models_nfold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.evaluate_fusion_models_nfold" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">evaluate_fusion_models_nfold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fused_data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ChemicalDice_fusedData'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.evaluate_fusion_models_nfold"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.evaluate_fusion_models_nfold" title="Link to this definition"></a></dt>
 <dd><p>Perform n-fold cross-validation on fusion models and save the evaluation metrics.This method evaluates the performance of various machine learning models on fused data obtained from ChemDice. It supports both classification and regression tasks and saves the performance metrics for each fold into a CSV file.
 :param folds: The number of folds to use for KFold cross-validation.
 :type folds: int
@@ -412,14 +378,55 @@ Defaults to “labels”.</p></li>
 :type task_type: str
 :param fused_data_path: The path to the directory containing the fused data files, defaults to ‘ChemicalDice_fusedData’.
 :type fused_data_path: str
+:param models: The list of model names to evaluate. If None, a default set of models will be used.
+:type models: list[str], optional
 :raises ValueError: If the <cite>task_type</cite> is neither ‘classification’ nor ‘regression’.
-:return: None
-.. note:: The method assumes that the prediction labels are stored in <cite>self.prediction_label</cite>.For classification, it evaluates models based on AUC, accuracy, precision, recall, f1 score, balanced accuracy, MCC, and kappa. For regression, it evaluates models based on R2 score, MSE, RMSE, and MAE. The results are saved in a CSV file named ‘Accuracy_Metrics_{method_chemdice}.csv’ in a directory named ‘{folds}_fold_CV_results’.</p>
+:return: None</p>
+<p>Available Models for
+Classification:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>“Logistic Regression”</p></li>
+<li><p>“Decision Tree”</p></li>
+<li><p>“Random Forest”</p></li>
+<li><p>“Support Vector Machine”</p></li>
+<li><p>“Naive Bayes”</p></li>
+<li><p>“KNN”</p></li>
+<li><p>“NeuralNet”</p></li>
+<li><p>“QDA”</p></li>
+<li><p>“AdaBoost”</p></li>
+<li><p>“Extra Trees”</p></li>
+<li><p>“XGBoost”</p></li>
+</ul>
+</div></blockquote>
+<p>Available Models for
+Regression:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>“Linear Regression”</p></li>
+<li><p>“Ridge”</p></li>
+<li><p>“Lasso”</p></li>
+<li><p>“ElasticNet”</p></li>
+<li><p>“Decision Tree”</p></li>
+<li><p>“Random Forest”</p></li>
+<li><p>“Gradient Boosting”</p></li>
+<li><p>“AdaBoost”</p></li>
+<li><p>“Support Vector Machine”</p></li>
+<li><p>“K Neighbors”</p></li>
+<li><p>“MLP”</p></li>
+<li><p>“Gaussian Process”</p></li>
+<li><p>“Kernel Ridge”</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The method assumes that the prediction labels are stored in <cite>self.prediction_label</cite>.For classification, it evaluates models based on AUC, accuracy, precision, recall, f1 score, balanced accuracy, MCC, and kappa. For regression, it evaluates models based on R2 score, MSE, RMSE, and MAE. The results are saved in a CSV file named ‘Accuracy_Metrics_{method_name}.csv’ in a directory named ‘{folds}_fold_CV_results’.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ChemicalDice.fusionData.fusionData.evaluate_fusion_models_scaffold_split">
-<span class="sig-name descname"><span class="pre">evaluate_fusion_models_scaffold_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fused_data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ChemicalDice_fusedData'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.evaluate_fusion_models_scaffold_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.evaluate_fusion_models_scaffold_split" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">evaluate_fusion_models_scaffold_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fused_data_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ChemicalDice_fusedData'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ChemicalDice/fusionData.html#fusionData.evaluate_fusion_models_scaffold_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ChemicalDice.fusionData.fusionData.evaluate_fusion_models_scaffold_split" title="Link to this definition"></a></dt>
 <dd><p>Perform n-fold cross-validation on fusion models and save the evaluation metrics. This method evaluates the performance of various machine learning models on fused data obtained from ChemDice. It supports both classification and regression tasks and saves the performance metrics for each fold into a CSV file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -427,6 +434,7 @@ Defaults to “labels”.</p></li>
 <li><p><strong>split_type</strong> – The type scaffold dsta split to perform. Three types available  ‘random’, ‘balanced’ or ‘simple’</p></li>
 <li><p><strong>task_type</strong> (<em>str</em>) – The type of task to perform, either ‘classification’ or ‘regression’.</p></li>
 <li><p><strong>fused_data_path</strong> (<em>str</em>) – The path to the directory containing the fused data files, defaults to ‘ChemicalDice_fusedData’.</p></li>
+<li><p><strong>models</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The list of model names to evaluate. If None, a default set of models will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -436,6 +444,42 @@ Defaults to “labels”.</p></li>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
+<p>Available Models for
+Classification:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>“Logistic Regression”</p></li>
+<li><p>“Decision Tree”</p></li>
+<li><p>“Random Forest”</p></li>
+<li><p>“Support Vector Machine”</p></li>
+<li><p>“Naive Bayes”</p></li>
+<li><p>“KNN”</p></li>
+<li><p>“NeuralNet”</p></li>
+<li><p>“QDA”</p></li>
+<li><p>“AdaBoost”</p></li>
+<li><p>“Extra Trees”</p></li>
+<li><p>“XGBoost”</p></li>
+</ul>
+</div></blockquote>
+<p>Available Models for
+Regression:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>“Linear Regression”</p></li>
+<li><p>“Ridge”</p></li>
+<li><p>“Lasso”</p></li>
+<li><p>“ElasticNet”</p></li>
+<li><p>“Decision Tree”</p></li>
+<li><p>“Random Forest”</p></li>
+<li><p>“Gradient Boosting”</p></li>
+<li><p>“AdaBoost”</p></li>
+<li><p>“Support Vector Machine”</p></li>
+<li><p>“K Neighbors”</p></li>
+<li><p>“MLP”</p></li>
+<li><p>“Gaussian Process”</p></li>
+<li><p>“Kernel Ridge”</p></li>
+</ul>
+</div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The method assumes that the prediction labels are stored in <cite>self.prediction_label</cite>. For classification, it evaluates models based on AUC, accuracy, precision, recall, f1 score, balanced accuracy, MCC, and kappa. For regression, it evaluates models based on R2 score, MSE, RMSE, and MAE. The results are saved in a CSV file named ‘Accuracy_Metrics_{method_chemdice}.csv’ in a directory named ‘scaffold_split_results’.</p>
